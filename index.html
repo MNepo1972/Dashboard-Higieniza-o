@@ -479,8 +479,9 @@ window.entrarComUpload = async function() {
   document.getElementById('upload-screen').style.display='none';
   document.getElementById('dashboard').style.display='block';
   document.getElementById('btn-salvar').style.display='';
-  setSyncStatus('load','Carregando dados do servidor...');
-  await carregarFirebase();
+  setSyncStatus('online','Dados carregados localmente — clique em Salvar para enviar ao servidor.');
+  // Não carrega Firebase: parte do zero com os arquivos do upload
+  fbHig={}; fbRet={};
   mesclar(pendHig, pendRet);
   if (pendRet1t) mesclar(null, pendRet1t);
   buildTODOS(); renderDashboard();
