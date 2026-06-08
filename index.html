@@ -544,10 +544,15 @@ function parseHig(buf) {
 
   const wsO = wb.Sheets['Higienização OBA'];
   if (!wsO) throw new Error('Aba "Higienização OBA" não encontrada');
-  XLSX.utils.sheet_to_json(wsO,{header:1,raw:true,defval:null}).slice(4).forEach(r=>{
+  const allRows = XLSX.utils.sheet_to_json(wsO,{header:1,raw:true,defval:null}).slice(4);
+  console.log('[parseHig] total linhas:', allRows.length);
+  console.log('[parseHig] linha 0:', JSON.stringify(allRows[0]));
+  console.log('[parseHig] linha 1:', JSON.stringify(allRows[1]));
+  allRows.forEach(r=>{
     const ds=excelDate(r[1]), q=parseFloat(r[3])||0;
     if(ds&&q&&ds.startsWith('2026')) rows.push({ds, tipo:'oba', q});
   });
+  console.log('[parseHig] rows aceitos 2026:', rows.length);
 
   // CEASA EXP: cabeçalho na linha 5 (idx 4), dados a partir da linha 6 (idx 5)
   // col A=data_exp(0), col D=qtd_exp(3), col F=data_rec(5), col H=qtd_rec(7)
