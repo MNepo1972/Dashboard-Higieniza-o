@@ -400,12 +400,12 @@ function excelDate(v) {
 }
 
 function parseHig(buf) {
-  const wb = XLSX.read(buf, {type:'array', cellDates:true});
+  const wb = XLSX.read(buf, {type:'array', cellDates:false});
   const rows = [];
 
   const wsO = wb.Sheets['Higienização OBA'];
   if (!wsO) throw new Error('Aba "Higienização OBA" não encontrada');
-  const allRowsOBA = XLSX.utils.sheet_to_json(wsO,{header:1,raw:true});
+  const allRowsOBA = XLSX.utils.sheet_to_json(wsO,{header:1,raw:true,defval:null});
   console.log('[DEBUG] Total linhas:', allRowsOBA.length);
   console.log('[DEBUG] Linha 5 (1º dado):', JSON.stringify(allRowsOBA[4]));
   console.log('[DEBUG] r[1] tipo:', typeof allRowsOBA[4]?.[1], '| valor:', String(allRowsOBA[4]?.[1]));
@@ -423,7 +423,7 @@ function parseHig(buf) {
   // col A=data_exp(0), col D=qtd_exp(3), col F=data_rec(5), col H=qtd_rec(7)
   const wsC = wb.Sheets['Higienização CEASA EXP.'];
   if (wsC) {
-    XLSX.utils.sheet_to_json(wsC,{header:1,raw:true}).slice(5).forEach(r=>{
+    XLSX.utils.sheet_to_json(wsC,{header:1,raw:true,defval:null}).slice(5).forEach(r=>{
       const de=excelDate(r[0]), qe=parseFloat(r[3])||0;
       const dr=excelDate(r[5]), qr=parseFloat(r[7])||0;
       if(de&&qe) rows.push({ds:de, tipo:'ceasa_exp', q:qe});
@@ -434,13 +434,13 @@ function parseHig(buf) {
 }
 
 function parseRet(buf) {
-  const wb = XLSX.read(buf, {type:'array', cellDates:true});
+  const wb = XLSX.read(buf, {type:'array', cellDates:false});
   const ws = wb.Sheets['RETORNO DE MATERIAIS'];
   if (!ws) throw new Error('Aba "RETORNO DE MATERIAIS" não encontrada');
   const rows = [];
   // Cabeçalho na linha 1 (idx 0), dados a partir da linha 2 (idx 1)
   // col A=Data(0), col D=Modelo(3), col E=QTD_FISICA(4)
-  XLSX.utils.sheet_to_json(ws,{header:1,raw:true}).slice(1).forEach(r=>{
+  XLSX.utils.sheet_to_json(ws,{header:1,raw:true,defval:null}).slice(1).forEach(r=>{
     const ds=excelDate(r[0]);
     const modelo=String(r[3]||'').trim().toUpperCase();
     const q=parseFloat(r[4])||0;
