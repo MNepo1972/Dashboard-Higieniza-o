@@ -413,7 +413,7 @@ function parseHig(buf) {
   console.log('[DEBUG] excelDate(r[1]):', allRowsOBA[4] ? String(allRowsOBA[4][1] instanceof Date ? allRowsOBA[4][1].toISOString() : allRowsOBA[4][1]) : 'N/A');
   let aceitos=0, descartados=0;
   allRowsOBA.slice(4).forEach(r=>{
-    const ds=excelDate(r[1]), q=parseFloat(r[3])||0;
+    const ds=excelDate(r[0]), q=parseFloat(r[2])||0;
     if(ds&&q){ rows.push({ds, tipo:'oba', q}); aceitos++; }
     else descartados++;
   });
