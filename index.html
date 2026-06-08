@@ -4,7 +4,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Retorno × Higienização — Caixas OBA</title>
-<script src="./Retorno × Higienização — Caixas OBA_files/xlsx.full.min.js.download"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <link href="./Retorno × Higienização — Caixas OBA_files/css2" rel="stylesheet">
 <style>
 :root{
@@ -548,7 +548,7 @@ function parseHig(buf) {
   if (!wsO) throw new Error('Aba "Higienização OBA" não encontrada');
   XLSX.utils.sheet_to_json(wsO,{header:1,raw:true,defval:null}).slice(4).forEach(r=>{
     const ds=excelDate(r[1]), q=parseFloat(r[3])||0;
-if(ds&&q&&ds.startsWith('2026')) rows.push({ds, tipo:'oba', q});
+    if(ds&&q&&ds.startsWith('2026')) rows.push({ds, tipo:'oba', q});
   });
 
   // CEASA EXP: cabeçalho na linha 5 (idx 4), dados a partir da linha 6 (idx 5)
