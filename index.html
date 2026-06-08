@@ -408,9 +408,9 @@ function parseHig(buf) {
   const allRowsOBA = XLSX.utils.sheet_to_json(wsO,{header:1,raw:true,defval:null});
   console.log('[DEBUG] Total linhas:', allRowsOBA.length);
   console.log('[DEBUG] Linha 5 (1º dado):', JSON.stringify(allRowsOBA[4]));
-  console.log('[DEBUG] r[1] tipo:', typeof allRowsOBA[4]?.[1], '| valor:', String(allRowsOBA[4]?.[1]));
-  console.log('[DEBUG] r[3] tipo:', typeof allRowsOBA[4]?.[3], '| valor:', allRowsOBA[4]?.[3]);
-  console.log('[DEBUG] excelDate(r[1]):', allRowsOBA[4] ? String(allRowsOBA[4][1] instanceof Date ? allRowsOBA[4][1].toISOString() : allRowsOBA[4][1]) : 'N/A');
+  console.log('[DEBUG] r[0] tipo:', typeof allRowsOBA[4]?.[0], '| valor:', String(allRowsOBA[4]?.[0]));
+  console.log('[DEBUG] r[2] tipo:', typeof allRowsOBA[4]?.[2], '| valor:', allRowsOBA[4]?.[2]);
+  console.log('[DEBUG] excelDate(r[0]):', allRowsOBA[4] ? String(excelDate(allRowsOBA[4][0])) : 'N/A');
   let aceitos=0, descartados=0;
   allRowsOBA.slice(4).forEach(r=>{
     const ds=excelDate(r[0]), q=parseFloat(r[2])||0;
