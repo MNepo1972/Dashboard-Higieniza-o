@@ -405,19 +405,10 @@ function parseHig(buf) {
 
   const wsO = wb.Sheets['Higienização OBA'];
   if (!wsO) throw new Error('Aba "Higienização OBA" não encontrada');
-  const allRowsOBA = XLSX.utils.sheet_to_json(wsO,{header:1,raw:true,defval:null});
-  console.log('[DEBUG] Total linhas:', allRowsOBA.length);
-  console.log('[DEBUG] Linha 5 (1º dado):', JSON.stringify(allRowsOBA[4]));
-  console.log('[DEBUG] r[0] tipo:', typeof allRowsOBA[4]?.[0], '| valor:', String(allRowsOBA[4]?.[0]));
-  console.log('[DEBUG] r[2] tipo:', typeof allRowsOBA[4]?.[2], '| valor:', allRowsOBA[4]?.[2]);
-  console.log('[DEBUG] excelDate(r[0]):', allRowsOBA[4] ? String(excelDate(allRowsOBA[4][0])) : 'N/A');
-  let aceitos=0, descartados=0;
-  allRowsOBA.slice(4).forEach(r=>{
+  XLSX.utils.sheet_to_json(wsO,{header:1,raw:true,defval:null}).slice(4).forEach(r=>{
     const ds=excelDate(r[0]), q=parseFloat(r[2])||0;
-    if(ds&&q){ rows.push({ds, tipo:'oba', q}); aceitos++; }
-    else descartados++;
+    if(ds&&q) rows.push({ds, tipo:'oba', q});
   });
-  console.log('[DEBUG] OBA aceitos:', aceitos, '| descartados:', descartados);
 
   // CEASA EXP: cabeçalho na linha 5 (idx 4), dados a partir da linha 6 (idx 5)
   // col A=data_exp(0), col D=qtd_exp(3), col F=data_rec(5), col H=qtd_rec(7)
