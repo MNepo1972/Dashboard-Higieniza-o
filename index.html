@@ -557,6 +557,8 @@ function parseHig(buf) {
   console.log('[parseHig] total linhas:', allRows.length);
   console.log('[parseHig] linha 0:', JSON.stringify(allRows[0]));
   console.log('[parseHig] linha 1:', JSON.stringify(allRows[1]));
+  console.log('[parseHig] última linha:', JSON.stringify(allRows[allRows.length-1]));
+  console.log('[parseHig] excelDate(r[0]) linha0:', excelDate(allRows[0][0]));
   allRows.forEach(r=>{
     const ds=excelDate(r[0]), q=parseFloat(r[2])||0;
     if(ds&&q&&ds.startsWith('2026')) rows.push({ds, tipo:'oba', q});
