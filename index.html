@@ -558,7 +558,7 @@ function parseHig(buf) {
   console.log('[parseHig] linha 0:', JSON.stringify(allRows[0]));
   console.log('[parseHig] linha 1:', JSON.stringify(allRows[1]));
   allRows.forEach(r=>{
-    const ds=excelDate(r[1]), q=parseFloat(r[3])||0;
+    const ds=excelDate(r[0]), q=parseFloat(r[2])||0;
     if(ds&&q&&ds.startsWith('2026')) rows.push({ds, tipo:'oba', q});
   });
   console.log('[parseHig] rows aceitos 2026:', rows.length);
