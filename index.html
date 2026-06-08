@@ -380,14 +380,27 @@ let mPendRet1t=null;
 // ═══════════ PARSE XLSX ═══════════
 function excelDate(v) {
   if (!v) return null;
-  if (v instanceof Date) return v.toISOString().slice(0,10);
+  if (v instanceof Date) {
+    // Usa getFullYear/Month/Date (local) para evitar shift de UTC-3 no Brasil
+    const y = v.getFullYear();
+    const m = String(v.getMonth()+1).padStart(2,'0');
+    const d = String(v.getDate()).padStart(2,'0');
+    if (y < 2000 || y > 2100) return null; // descarta datas inválidas
+    return `${y}-${m}-${d}`;
+  }
+  if (typeof v === 'string') {
+    // tenta parsear string de data diretamente
+    const s = v.trim();
+    if (/^\d{4}-\d{2}-\d{2}/.test(s)) return s.slice(0,10);
+    return null;
+  }
   if (typeof v !== 'number') return null;
   const d = new Date(Date.UTC(1900,0,1) + (v > 59 ? v-2 : v-1)*86400000);
   return `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,'0')}-${String(d.getUTCDate()).padStart(2,'0')}`;
 }
 
 function parseHig(buf) {
-  const wb = XLSX.read(buf, {type:'array', cellDates:false});
+  const wb = XLSX.read(buf, {type:'array', cellDates:true});
   const rows = [];
 
   // OBA: cabeçalho na linha 4 (idx 3), dados a partir da linha 5 (idx 4)
@@ -414,7 +427,7 @@ function parseHig(buf) {
 }
 
 function parseRet(buf) {
-  const wb = XLSX.read(buf, {type:'array', cellDates:false});
+  const wb = XLSX.read(buf, {type:'array', cellDates:true});
   const ws = wb.Sheets['RETORNO DE MATERIAIS'];
   if (!ws) throw new Error('Aba "RETORNO DE MATERIAIS" não encontrada');
   const rows = [];
