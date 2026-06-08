@@ -198,6 +198,7 @@ svg.trend-svg{width:100%;height:100%;overflow:visible;}
       <span id="sync-ultima" style="font-size:11px;color:var(--muted);font-family:'Barlow Condensed',sans-serif;"></span>
       <button class="btn-atualizar" onclick="abrirModal()">↑ ATUALIZAR DADOS</button>
       <button class="btn-salvar" id="btn-salvar" onclick="salvarFirebase()">💾 SALVAR NO SERVIDOR</button>
+      <button class="btn-atualizar" style="border-color:var(--red);color:var(--red);background:rgba(231,76,60,0.06);" onclick="abrirModalReset()">⚠ REESCREVER TUDO</button>
     </div>
   </div>
 
@@ -303,6 +304,42 @@ svg.trend-svg{width:100%;height:100%;overflow:visible;}
     <div class="modal-actions">
       <button class="btn-modal-cancel" onclick="fecharModal()">Cancelar</button>
       <button class="btn-modal-save" id="btn-modal-save" onclick="salvarModal()" disabled>Salvar no Servidor</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- MODAL REESCREVER TUDO -->
+<div id="modal-reset-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:200;align-items:center;justify-content:center;">
+  <div class="modal" style="border-color:var(--red);">
+    <div class="modal-title" style="color:var(--red);">⚠ Reescrever Dados do Servidor</div>
+    <div class="modal-sub" style="color:#e8a0a0;">Isso apaga tudo que está no Firebase e reescreve do zero com as planilhas abaixo.<br>Use quando os dados estiverem duplicados ou corrompidos. Carregue as 3 planilhas.</div>
+    <div class="modal-cards" style="grid-template-columns:1fr 1fr 1fr;">
+      <div class="modal-card" id="rcard-hig">
+        <input type="file" accept=".xlsx,.xls" id="rfile-hig">
+        <span class="modal-card-icon">🧼</span>
+        <div class="modal-card-label">Higienização OBA</div>
+        <div class="modal-card-sub">Higienização_de_Caixas_Oba.xlsx</div>
+        <div class="modal-card-status" id="rstatus-hig"></div>
+      </div>
+      <div class="modal-card" id="rcard-ret">
+        <input type="file" accept=".xlsx,.xls" id="rfile-ret">
+        <span class="modal-card-icon">📦</span>
+        <div class="modal-card-label">Retorno 2º Trim+</div>
+        <div class="modal-card-sub">Controle_Logistica_Reversa.xlsx</div>
+        <div class="modal-card-status" id="rstatus-ret"></div>
+      </div>
+      <div class="modal-card" id="rcard-ret1t">
+        <input type="file" accept=".xlsx,.xls" id="rfile-ret1t">
+        <span class="modal-card-icon">🗓️</span>
+        <div class="modal-card-label">Retorno 1º Trim</div>
+        <div class="modal-card-sub">Controle_Logistica_Reversa_1º_Trim.xlsx</div>
+        <div class="modal-card-status" id="rstatus-ret1t"></div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-modal-cancel" onclick="fecharModalReset()">Cancelar</button>
+      <button class="btn-modal-save" id="btn-reset-save" style="background:var(--red);" onclick="executarReset()" disabled>APAGAR E REESCREVER</button>
     </div>
   </div>
 </div>
@@ -470,20 +507,29 @@ async function carregarFirebase() {
 }
 
 // ═══════════ MESCLAR DADOS LOCAIS COM FIREBASE ═══════════
+// FIX A: ao fazer upload, sobrescreve os dias dos meses presentes nos novos dados
+//        em vez de acumular em cima do que veio do Firebase (evita duplicação).
+// FIX B: o recálculo de totais só roda nos meses que têm estrutura 'dias';
+//        meses sem 'dias' (salvos no formato antigo) mantêm seus totais intactos.
 function mesclar(higRows, retRows) {
   if (higRows) {
-    // Agrupa por mês
+    // Coleta quais meses estão nos novos dados
+    const mesesNovos = new Set(higRows.map(r => r.ds.slice(0,7)));
+    // Para cada mês novo, zera os dias daquele mês (evita duplicação)
+    mesesNovos.forEach(m => {
+      if (!fbHig[m]) fbHig[m] = {oba:0, ceasa_exp:0, ceasa_rec:0, dias:{}};
+      fbHig[m].dias = {};
+    });
+    // Agora acumula os novos dados nos dias zerados
     higRows.forEach(r => {
       const m = r.ds.slice(0,7);
-      if (!fbHig[m]) fbHig[m] = {oba:0, ceasa_exp:0, ceasa_rec:0, dias:{}};
-      // Acumula por dia para não duplicar
-      if (!fbHig[m].dias) fbHig[m].dias = {};
       if (!fbHig[m].dias[r.ds]) fbHig[m].dias[r.ds] = {oba:0, ceasa_exp:0, ceasa_rec:0};
       fbHig[m].dias[r.ds][r.tipo] = (fbHig[m].dias[r.ds][r.tipo]||0) + r.q;
     });
-    // Recalcula totais do mês
+    // Recalcula totais APENAS dos meses que têm estrutura 'dias'
     Object.keys(fbHig).forEach(m => {
-      const dias = fbHig[m].dias || {};
+      if (!fbHig[m].dias) return; // mês antigo sem 'dias': mantém totais como estão
+      const dias = fbHig[m].dias;
       fbHig[m].oba=0; fbHig[m].ceasa_exp=0; fbHig[m].ceasa_rec=0;
       Object.values(dias).forEach(d => {
         fbHig[m].oba       += d.oba       || 0;
@@ -493,15 +539,21 @@ function mesclar(higRows, retRows) {
     });
   }
   if (retRows) {
+    const mesesNovos = new Set(retRows.map(r => r.ds.slice(0,7)));
+    // Zera dias dos meses presentes nos novos dados (evita duplicação)
+    mesesNovos.forEach(m => {
+      if (!fbRet[m]) fbRet[m] = {retorno:0, dias:{}};
+      fbRet[m].dias = {};
+    });
     retRows.forEach(r => {
       const m = r.ds.slice(0,7);
-      if (!fbRet[m]) fbRet[m] = {retorno:0, dias:{}};
-      if (!fbRet[m].dias) fbRet[m].dias = {};
       if (!fbRet[m].dias[r.ds]) fbRet[m].dias[r.ds] = 0;
       fbRet[m].dias[r.ds] += r.q;
     });
+    // Recalcula apenas meses com 'dias'
     Object.keys(fbRet).forEach(m => {
-      fbRet[m].retorno = Object.values(fbRet[m].dias||{}).reduce((s,v)=>s+v,0);
+      if (!fbRet[m].dias) return;
+      fbRet[m].retorno = Object.values(fbRet[m].dias).reduce((s,v)=>s+v,0);
     });
   }
 }
@@ -574,6 +626,68 @@ window.salvarModal = async function() {
   } catch(e) {
     alert('Erro: '+e.message);
     btn.disabled=false; btn.textContent='Salvar no Servidor';
+  }
+};
+
+
+// ═══════════ MODAL RESET — REESCREVER TUDO ═══════════
+let rPendHig=null, rPendRet=null, rPendRet1t=null;
+
+window.abrirModalReset = function() {
+  rPendHig=null; rPendRet=null; rPendRet1t=null;
+  ['rfile-hig','rfile-ret','rfile-ret1t'].forEach(id=>document.getElementById(id).value='');
+  ['rstatus-hig','rstatus-ret','rstatus-ret1t'].forEach(id=>{ document.getElementById(id).textContent=''; document.getElementById(id).className='modal-card-status'; });
+  ['rcard-hig','rcard-ret','rcard-ret1t'].forEach(id=>document.getElementById(id).classList.remove('done'));
+  const btn=document.getElementById('btn-reset-save'); btn.disabled=true; btn.classList.remove('ready');
+  document.getElementById('modal-reset-overlay').style.display='flex';
+};
+window.fecharModalReset = function() { document.getElementById('modal-reset-overlay').style.display='none'; };
+
+document.getElementById('rfile-hig').addEventListener('change', e => {
+  lerArquivo(e.target.files[0], parseHig,
+    rows => { rPendHig=rows; setResetStatus('hig',`✓ ${rows.length} registros`,true); checkReset(); },
+    msg  => setResetStatus('hig','✗ '+msg,false)
+  );
+});
+document.getElementById('rfile-ret').addEventListener('change', e => {
+  lerArquivo(e.target.files[0], parseRet,
+    rows => { rPendRet=rows; setResetStatus('ret',`✓ ${rows.length} registros`,true); checkReset(); },
+    msg  => setResetStatus('ret','✗ '+msg,false)
+  );
+});
+document.getElementById('rfile-ret1t').addEventListener('change', e => {
+  lerArquivo(e.target.files[0], parseRet,
+    rows => { rPendRet1t=rows; setResetStatus('ret1t',`✓ ${rows.length} registros`,true); checkReset(); },
+    msg  => setResetStatus('ret1t','✗ '+msg,false)
+  );
+});
+function setResetStatus(tipo,msg,ok){
+  const el=document.getElementById(`rstatus-${tipo}`); el.textContent=msg; el.className='modal-card-status '+(ok?'ok':'err');
+  if(ok) document.getElementById(`rcard-${tipo}`).classList.add('done');
+}
+function checkReset(){
+  if(rPendHig&&rPendRet&&rPendRet1t){ const btn=document.getElementById('btn-reset-save'); btn.disabled=false; btn.classList.add('ready'); }
+}
+
+window.executarReset = async function() {
+  if(!rPendHig||!rPendRet||!rPendRet1t){ alert('Carregue as 3 planilhas antes de continuar.'); return; }
+  if(!confirm('Isso vai apagar todos os dados do servidor e reescrever do zero. Confirma?')) return;
+  const btn=document.getElementById('btn-reset-save');
+  btn.disabled=true; btn.textContent='Reescrevendo...';
+  // Zera tudo em memória
+  fbHig={}; fbRet={};
+  // Processa do zero (sem dados do Firebase, sem risco de acúmulo)
+  mesclar(rPendHig, rPendRet);
+  mesclar(null, rPendRet1t);
+  try {
+    await set(ref(db,'higienizacao'), {hig: fbHig, ret: fbRet, updated: new Date().toISOString()});
+    fecharModalReset();
+    buildTODOS(); renderDashboard();
+    setSyncStatus('online','Dados reescritos do zero com sucesso!');
+    btn.disabled=false; btn.textContent='APAGAR E REESCREVER';
+  } catch(e) {
+    alert('Erro ao reescrever: '+e.message);
+    btn.disabled=false; btn.textContent='APAGAR E REESCREVER';
   }
 };
 
