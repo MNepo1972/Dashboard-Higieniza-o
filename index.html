@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="pt-BR"><head><meta charset="UTF-8">
+<!-- saved from url=(0050)https://mnepo1972.github.io/Dashboard-Higieniza-o/ -->
+<html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Retorno × Higienização — Caixas OBA</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600&family=Barlow+Condensed:wght@600;700;900&display=swap" rel="stylesheet">
+<script src="./Retorno × Higienização — Caixas OBA_files/xlsx.full.min.js.download"></script>
+<link href="./Retorno × Higienização — Caixas OBA_files/css2" rel="stylesheet">
 <style>
 :root{
   --bg:#0d0f14;--surface:#141720;--border:#1e2330;
@@ -158,7 +160,7 @@ svg.trend-svg{width:100%;height:100%;overflow:visible;}
 <div id="upload-screen" style="display: none;">
   <div class="up-title">RETORNO × HIGIENIZAÇÃO</div>
   <div class="up-sub">Caixas Plásticas OBA · CD Sumaré/SP<br>Faça o upload das planilhas para gerar o dashboard, ou visualize os dados já salvos.</div>
-  <div class="up-cards" style="grid-template-columns:1fr 1fr 1fr;width:820px;">
+  <div class="up-cards" style="grid-template-columns:1fr 1fr;width:580px;">
     <div class="up-card" id="card-hig">
       <input type="file" accept=".xlsx,.xls" id="file-hig">
       <span class="up-icon">🧼</span>
@@ -169,16 +171,9 @@ svg.trend-svg{width:100%;height:100%;overflow:visible;}
     <div class="up-card" id="card-ret">
       <input type="file" accept=".xlsx,.xls" id="file-ret">
       <span class="up-icon">📦</span>
-      <div class="up-card-title">Retorno 2º Trim+</div>
-      <div class="up-card-sub">Controle_Logistica_Reversa.xlsx<br>Aba: RETORNO DE MATERIAIS</div>
+      <div class="up-card-title">Recebimento Caixas</div>
+      <div class="up-card-sub">Recebimento_Caixas Plásticas_2026.xlsx<br>Aba: Recebimento_Caixa_Plastica (ano completo)</div>
       <div class="up-status" id="status-ret"></div>
-    </div>
-    <div class="up-card" id="card-ret1t">
-      <input type="file" accept=".xlsx,.xls" id="file-ret1t">
-      <span class="up-icon">🗓️</span>
-      <div class="up-card-title">Retorno 1º Trim</div>
-      <div class="up-card-sub">Controle_Logistica_Reversa_1º_Trimestre.xlsx<br>Aba: RETORNO DE MATERIAIS</div>
-      <div class="up-status" id="status-ret1t"></div>
     </div>
   </div>
   <button class="btn-principal" id="btn-entrar" onclick="entrarComUpload()">GERAR DASHBOARD</button>
@@ -417,7 +412,7 @@ svg.trend-svg{width:100%;height:100%;overflow:visible;}
   <div class="modal">
     <div class="modal-title">Atualizar Dados</div>
     <div class="modal-sub">Faça upload de uma ou ambas as planilhas. Os dados novos substituem os do mesmo período no servidor.</div>
-    <div class="modal-cards" style="grid-template-columns:1fr 1fr 1fr;">
+    <div class="modal-cards" style="grid-template-columns:1fr 1fr;">
       <div class="modal-card" id="mcard-hig">
         <input type="file" accept=".xlsx,.xls" id="mfile-hig">
         <span class="modal-card-icon">🧼</span>
@@ -428,16 +423,9 @@ svg.trend-svg{width:100%;height:100%;overflow:visible;}
       <div class="modal-card" id="mcard-ret">
         <input type="file" accept=".xlsx,.xls" id="mfile-ret">
         <span class="modal-card-icon">📦</span>
-        <div class="modal-card-label">Retorno 2º Trim+</div>
-        <div class="modal-card-sub">Controle_Logistica_Reversa.xlsx</div>
+        <div class="modal-card-label">Recebimento Caixas</div>
+        <div class="modal-card-sub">Recebimento_Caixas Plásticas_2026.xlsx</div>
         <div class="modal-card-status" id="mstatus-ret"></div>
-      </div>
-      <div class="modal-card" id="mcard-ret1t">
-        <input type="file" accept=".xlsx,.xls" id="mfile-ret1t">
-        <span class="modal-card-icon">🗓️</span>
-        <div class="modal-card-label">Retorno 1º Trim</div>
-        <div class="modal-card-sub">Controle_Logistica_Reversa_1º_Trim.xlsx</div>
-        <div class="modal-card-status" id="mstatus-ret1t"></div>
       </div>
     </div>
     <div class="modal-actions">
@@ -452,8 +440,8 @@ svg.trend-svg{width:100%;height:100%;overflow:visible;}
 <div id="modal-reset-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:200;align-items:center;justify-content:center;">
   <div class="modal" style="border-color:var(--red);">
     <div class="modal-title" style="color:var(--red);">⚠ Reescrever Dados do Servidor</div>
-    <div class="modal-sub" style="color:#e8a0a0;">Isso apaga tudo que está no Firebase e reescreve do zero com as planilhas abaixo.<br>Use quando os dados estiverem duplicados ou corrompidos. Carregue as 3 planilhas.</div>
-    <div class="modal-cards" style="grid-template-columns:1fr 1fr 1fr;">
+    <div class="modal-sub" style="color:#e8a0a0;">Isso apaga tudo que está no Firebase e reescreve do zero com as planilhas abaixo.<br>Use quando os dados estiverem duplicados ou corrompidos. Carregue as 2 planilhas.</div>
+    <div class="modal-cards" style="grid-template-columns:1fr 1fr;">
       <div class="modal-card" id="rcard-hig">
         <input type="file" accept=".xlsx,.xls" id="rfile-hig">
         <span class="modal-card-icon">🧼</span>
@@ -464,16 +452,9 @@ svg.trend-svg{width:100%;height:100%;overflow:visible;}
       <div class="modal-card" id="rcard-ret">
         <input type="file" accept=".xlsx,.xls" id="rfile-ret">
         <span class="modal-card-icon">📦</span>
-        <div class="modal-card-label">Retorno 2º Trim+</div>
-        <div class="modal-card-sub">Controle_Logistica_Reversa.xlsx</div>
+        <div class="modal-card-label">Recebimento Caixas</div>
+        <div class="modal-card-sub">Recebimento_Caixas Plásticas_2026.xlsx</div>
         <div class="modal-card-status" id="rstatus-ret"></div>
-      </div>
-      <div class="modal-card" id="rcard-ret1t">
-        <input type="file" accept=".xlsx,.xls" id="rfile-ret1t">
-        <span class="modal-card-icon">🗓️</span>
-        <div class="modal-card-label">Retorno 1º Trim</div>
-        <div class="modal-card-sub">Controle_Logistica_Reversa_1º_Trim.xlsx</div>
-        <div class="modal-card-status" id="rstatus-ret1t"></div>
       </div>
     </div>
     <div class="modal-actions">
@@ -484,15 +465,6 @@ svg.trend-svg{width:100%;height:100%;overflow:visible;}
 </div>
 
 <script type="module">
-// ═══════════ XLSX — carregamento garantido ═══════════
-await new Promise((resolve, reject) => {
-  const s = document.createElement('script');
-  s.src = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';
-  s.onload = resolve;
-  s.onerror = reject;
-  document.head.appendChild(s);
-});
-
 // ═══════════ FIREBASE CONFIG ═══════════
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import { getDatabase, ref, set, get, child } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
@@ -520,10 +492,8 @@ let TODOS    = [];
 let selected = new Set();
 let pendHig  = null;  // dados parseados aguardando salvar
 let pendRet  = null;
-let pendRet1t= null;  // retorno 1º trimestre
 let mPendHig = null;  // modal
 let mPendRet = null;
-let mPendRet1t=null;
 
 // ═══════════ PARSE XLSX ═══════════
 function excelDate(v) {
@@ -553,17 +523,10 @@ function parseHig(buf) {
 
   const wsO = wb.Sheets['Higienização OBA'];
   if (!wsO) throw new Error('Aba "Higienização OBA" não encontrada');
-  const allRows = XLSX.utils.sheet_to_json(wsO,{header:1,raw:true,defval:null}).slice(4);
-  console.log('[parseHig] total linhas:', allRows.length);
-  console.log('[parseHig] linha 0:', JSON.stringify(allRows[0]));
-  console.log('[parseHig] linha 1:', JSON.stringify(allRows[1]));
-  console.log('[parseHig] última linha:', JSON.stringify(allRows[allRows.length-1]));
-  console.log('[parseHig] excelDate(r[0]) linha0:', excelDate(allRows[0][0]));
-  allRows.forEach(r=>{
+  XLSX.utils.sheet_to_json(wsO,{header:1,raw:true,defval:null}).slice(4).forEach(r=>{
     const ds=excelDate(r[0]), q=parseFloat(r[2])||0;
-    if(ds&&q&&ds.startsWith('2026')) rows.push({ds, tipo:'oba', q});
+    if(ds&&q) rows.push({ds, tipo:'oba', q});
   });
-  console.log('[parseHig] rows aceitos 2026:', rows.length);
 
   // CEASA EXP: cabeçalho na linha 5 (idx 4), dados a partir da linha 6 (idx 5)
   // col A=data_exp(0), col D=qtd_exp(3), col F=data_rec(5), col H=qtd_rec(7)
@@ -581,11 +544,13 @@ function parseHig(buf) {
 
 function parseRet(buf) {
   const wb = XLSX.read(buf, {type:'array', cellDates:false});
-  const ws = wb.Sheets['RETORNO DE MATERIAIS'];
-  if (!ws) throw new Error('Aba "RETORNO DE MATERIAIS" não encontrada');
+  // Nova fonte: Recebimento_Caixas Plásticas_2026.xlsx (aba Recebimento_Caixa_Plastica)
+  // Mantém fallback para a aba antiga por compatibilidade.
+  const ws = wb.Sheets['Recebimento_Caixa_Plastica'] || wb.Sheets['RETORNO DE MATERIAIS'];
+  if (!ws) throw new Error('Aba "Recebimento_Caixa_Plastica" não encontrada');
   const rows = [];
   // Cabeçalho na linha 1 (idx 0), dados a partir da linha 2 (idx 1)
-  // col A=Data(0), col D=Modelo(3), col E=QTD_FISICA(4)
+  // col A=DATA(0), col B=LOJA(1), col C=NF(2), col D=MODELO(3), col E=QTD_FISICA(4)
   XLSX.utils.sheet_to_json(ws,{header:1,raw:true,defval:null}).slice(1).forEach(r=>{
     const ds=excelDate(r[0]);
     const modelo=String(r[3]||'').trim().toUpperCase();
@@ -614,12 +579,6 @@ document.getElementById('file-ret').addEventListener('change', e => {
     msg  => setUpStatus('ret','✗ '+msg,false)
   );
 });
-document.getElementById('file-ret1t').addEventListener('change', e => {
-  lerArquivo(e.target.files[0], parseRet,
-    rows => { pendRet1t=rows; setUpStatus('ret1t',`✓ ${rows.length} registros`,true); checkEntrar(); },
-    msg  => setUpStatus('ret1t','✗ '+msg,false)
-  );
-});
 
 function setUpStatus(tipo, msg, ok) {
   const el=document.getElementById(`status-${tipo}`);
@@ -638,7 +597,6 @@ window.entrarComUpload = async function() {
   // Não carrega Firebase: parte do zero com os arquivos do upload
   fbHig={}; fbRet={};
   mesclar(pendHig, pendRet);
-  if (pendRet1t) mesclar(null, pendRet1t);
   buildTODOS(); renderDashboard();
 };
 
@@ -746,9 +704,9 @@ window.salvarFirebase = async function() {
 // ═══════════ MODAL ═══════════
 window.abrirModal = function() {
   mPendHig=null; mPendRet=null;
-  ['mfile-hig','mfile-ret','mfile-ret1t'].forEach(id=>document.getElementById(id).value='');
-  ['mstatus-hig','mstatus-ret','mstatus-ret1t'].forEach(id=>{ document.getElementById(id).textContent=''; document.getElementById(id).className='modal-card-status'; });
-  ['mcard-hig','mcard-ret','mcard-ret1t'].forEach(id=>document.getElementById(id).classList.remove('done'));
+  ['mfile-hig','mfile-ret'].forEach(id=>document.getElementById(id).value='');
+  ['mstatus-hig','mstatus-ret'].forEach(id=>{ document.getElementById(id).textContent=''; document.getElementById(id).className='modal-card-status'; });
+  ['mcard-hig','mcard-ret'].forEach(id=>document.getElementById(id).classList.remove('done'));
   const btn=document.getElementById('btn-modal-save'); btn.disabled=true; btn.classList.remove('ready');
   document.getElementById('modal-overlay').classList.add('open');
 };
@@ -766,18 +724,12 @@ document.getElementById('mfile-ret').addEventListener('change', e => {
     msg  => setModalStatus('ret','✗ '+msg,false)
   );
 });
-document.getElementById('mfile-ret1t').addEventListener('change', e => {
-  lerArquivo(e.target.files[0], parseRet,
-    rows => { mPendRet1t=rows; setModalStatus('ret1t',`✓ ${rows.length} registros`,true); checkModal(); },
-    msg  => setModalStatus('ret1t','✗ '+msg,false)
-  );
-});
 function setModalStatus(tipo,msg,ok){
   const el=document.getElementById(`mstatus-${tipo}`); el.textContent=msg; el.className='modal-card-status '+(ok?'ok':'err');
   if(ok) document.getElementById(`mcard-${tipo}`).classList.add('done');
 }
 function checkModal(){
-  if(mPendHig||mPendRet||mPendRet1t){ const btn=document.getElementById('btn-modal-save'); btn.disabled=false; btn.classList.add('ready'); }
+  if(mPendHig||mPendRet){ const btn=document.getElementById('btn-modal-save'); btn.disabled=false; btn.classList.add('ready'); }
 }
 
 window.salvarModal = async function() {
@@ -785,7 +737,6 @@ window.salvarModal = async function() {
   btn.disabled=true; btn.textContent='Salvando...';
   try {
     mesclar(mPendHig, mPendRet);
-    if (mPendRet1t) mesclar(null, mPendRet1t);
     await set(ref(db,'higienizacao'), {hig: fbHig, ret: fbRet, updated: new Date().toISOString()});
     fecharModal();
     buildTODOS(); renderDashboard();
@@ -798,13 +749,13 @@ window.salvarModal = async function() {
 
 
 // ═══════════ MODAL RESET — REESCREVER TUDO ═══════════
-let rPendHig=null, rPendRet=null, rPendRet1t=null;
+let rPendHig=null, rPendRet=null;
 
 window.abrirModalReset = function() {
-  rPendHig=null; rPendRet=null; rPendRet1t=null;
-  ['rfile-hig','rfile-ret','rfile-ret1t'].forEach(id=>document.getElementById(id).value='');
-  ['rstatus-hig','rstatus-ret','rstatus-ret1t'].forEach(id=>{ document.getElementById(id).textContent=''; document.getElementById(id).className='modal-card-status'; });
-  ['rcard-hig','rcard-ret','rcard-ret1t'].forEach(id=>document.getElementById(id).classList.remove('done'));
+  rPendHig=null; rPendRet=null;
+  ['rfile-hig','rfile-ret'].forEach(id=>document.getElementById(id).value='');
+  ['rstatus-hig','rstatus-ret'].forEach(id=>{ document.getElementById(id).textContent=''; document.getElementById(id).className='modal-card-status'; });
+  ['rcard-hig','rcard-ret'].forEach(id=>document.getElementById(id).classList.remove('done'));
   const btn=document.getElementById('btn-reset-save'); btn.disabled=true; btn.classList.remove('ready');
   document.getElementById('modal-reset-overlay').style.display='flex';
 };
@@ -822,22 +773,16 @@ document.getElementById('rfile-ret').addEventListener('change', e => {
     msg  => setResetStatus('ret','✗ '+msg,false)
   );
 });
-document.getElementById('rfile-ret1t').addEventListener('change', e => {
-  lerArquivo(e.target.files[0], parseRet,
-    rows => { rPendRet1t=rows; setResetStatus('ret1t',`✓ ${rows.length} registros`,true); checkReset(); },
-    msg  => setResetStatus('ret1t','✗ '+msg,false)
-  );
-});
 function setResetStatus(tipo,msg,ok){
   const el=document.getElementById(`rstatus-${tipo}`); el.textContent=msg; el.className='modal-card-status '+(ok?'ok':'err');
   if(ok) document.getElementById(`rcard-${tipo}`).classList.add('done');
 }
 function checkReset(){
-  if(rPendHig&&rPendRet&&rPendRet1t){ const btn=document.getElementById('btn-reset-save'); btn.disabled=false; btn.classList.add('ready'); }
+  if(rPendHig&&rPendRet){ const btn=document.getElementById('btn-reset-save'); btn.disabled=false; btn.classList.add('ready'); }
 }
 
 window.executarReset = async function() {
-  if(!rPendHig||!rPendRet||!rPendRet1t){ alert('Carregue as 3 planilhas antes de continuar.'); return; }
+  if(!rPendHig||!rPendRet){ alert('Carregue as 2 planilhas antes de continuar.'); return; }
   if(!confirm('Isso vai apagar todos os dados do servidor e reescrever do zero. Confirma?')) return;
   const btn=document.getElementById('btn-reset-save');
   btn.disabled=true; btn.textContent='Reescrevendo...';
@@ -845,7 +790,6 @@ window.executarReset = async function() {
   fbHig={}; fbRet={};
   // Processa do zero (sem dados do Firebase, sem risco de acúmulo)
   mesclar(rPendHig, rPendRet);
-  mesclar(null, rPendRet1t);
   try {
     await set(ref(db,'higienizacao'), {hig: fbHig, ret: fbRet, updated: new Date().toISOString()});
     fecharModalReset();
