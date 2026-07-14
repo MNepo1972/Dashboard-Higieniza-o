@@ -705,6 +705,17 @@ window.entrarComUpload = async function() {
   buildTODOS(); renderDashboard();
 };
 
+// ═══════════ INIT AUTOMÁTICO ═══════════
+// A página abre direto no dashboard com dados do servidor + GODMODE.
+// A tela de upload inicial fica desativada; atualizações via botão "Atualizar dados".
+(async function(){
+  document.getElementById('upload-screen').style.display='none';
+  document.getElementById('dashboard').style.display='block';
+  setSyncStatus('load','Carregando do servidor...');
+  await carregarFirebase();
+  buildTODOS(); renderDashboard();
+})();
+
 window.entrarVisualizador = async function() {
   document.getElementById('upload-screen').style.display='none';
   document.getElementById('dashboard').style.display='block';
