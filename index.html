@@ -802,6 +802,11 @@ function mesclar(higRows, retRows) {
 window.salvarFirebase = async function() {
   const btn = document.getElementById('btn-salvar');
   btn.disabled=true; btn.textContent='Salvando...';
+  if(!Object.keys(fbRet).length){
+    if(!confirm('ATENÇÃO: o RETORNO está vazio na tela. Salvar agora apagaria o histórico de retorno no servidor. Tem certeza?')){
+      btn.disabled=false; btn.textContent='💾 SALVAR NO SERVIDOR'; return;
+    }
+  }
   try {
     await set(ref(db,'higienizacao'), {hig: fbHig, ret: fbRet, updated: new Date().toISOString()});
     pendHig=null; pendRet=null;
@@ -858,6 +863,11 @@ window.salvarModal = async function() {
   btn.disabled=true; btn.textContent='Salvando...';
   try {
     mesclar(mPendHig, mPendRet);
+    if(!Object.keys(fbRet).length){
+      if(!confirm('ATENÇÃO: o RETORNO está vazio. Salvar agora apagaria o histórico de retorno no servidor. Tem certeza?')){
+        btn.disabled=false; btn.textContent='Salvar no Servidor'; return;
+      }
+    }
     if (mPendRet1t) mesclar(null, mPendRet1t);
     await set(ref(db,'higienizacao'), {hig: fbHig, ret: fbRet, updated: new Date().toISOString()});
     fecharModal();
