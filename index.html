@@ -506,6 +506,7 @@ const app = initializeApp(firebaseConfig);
 
 // ═══════════ GODMODE (retorno ao vivo) ═══════════
 const GOD_CUTOFF = '2026-07-01'; // antes: histórico das planilhas; a partir daqui: GODMODE
+const MES_INICIO = '2026-01'; // meses anteriores ficam salvos no Firebase, mas fora do dashboard
 const godConfig = {
   apiKey: "AIzaSyDCBvqc4xbsQcH5VQafqlmnuegX-yVZqJk",
   authDomain: "retorno-de-materiais.firebaseapp.com",
@@ -931,7 +932,7 @@ window.executarReset = async function() {
 
 // ═══════════ BUILD TODOS ═══════════
 function buildTODOS() {
-  const meses = new Set([...Object.keys(fbHig), ...Object.keys(fbRet)]);
+  const meses = new Set([...Object.keys(fbHig), ...Object.keys(fbRet)].filter(m => m >= MES_INICIO));
   TODOS = Array.from(meses).sort().map(m => {
     const h = fbHig[m] || {};
     const r = fbRet[m] || {};
