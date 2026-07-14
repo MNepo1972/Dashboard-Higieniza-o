@@ -681,12 +681,26 @@ window.entrarComUpload = async function() {
   document.getElementById('upload-screen').style.display='none';
   document.getElementById('dashboard').style.display='block';
   document.getElementById('btn-salvar').style.display='';
-  setSyncStatus('online','Dados carregados localmente — clique em Salvar para enviar ao servidor.');
-  // Não carrega Firebase: parte do zero com os arquivos do upload
+  setSyncStatus('load','Carregando histórico do servidor...');
+  // Carrega o histórico salvo primeiro; o mesclar substitui só os meses presentes no upload
   fbHig={}; fbRet={};
+  try {
+    const snap = await get(ref(db, 'higienizacao'));
+    if (snap.exists()) { const val=snap.val(); fbHig=val.hig||{}; fbRet=val.ret||{}; }
+  } catch(e) { console.error('Histórico indisponível:', e); }
   mesclar(pendHig, pendRet);
   if (pendRet1t) mesclar(null, pendRet1t);
-  try { aplicarGodmode(await carregarGodmode()); } catch(e){ console.error('GODMODE indisponível:', e); }
+  let godMsg='';
+  try {
+    const god = await carregarGodmode();
+    aplicarGodmode(god);
+    const nDias = Object.values(god).reduce((s,g)=>s+Object.keys(g.dias).length,0);
+    godMsg = ` · Retorno GODMODE ao vivo (${nDias} dias desde Jul/26)`;
+  } catch(e) {
+    console.error('GODMODE indisponível:', e);
+    godMsg = ' · ⚠ GODMODE: ' + (e && e.message ? e.message : 'falha de leitura');
+  }
+  setSyncStatus('online','Upload aplicado — clique em Salvar para enviar ao servidor.'+godMsg);
   buildTODOS(); renderDashboard();
 };
 
@@ -720,7 +734,7 @@ async function carregarFirebase() {
       godStatus = ` · Retorno GODMODE ao vivo (${nDias} dias desde Jul/26)`;
     } catch(e) {
       console.error('GODMODE indisponível:', e);
-      godStatus = ' · ⚠ GODMODE indisponível, retorno pode estar defasado';
+      godStatus = ' · ⚠ GODMODE: ' + (e && e.message ? e.message : 'falha de leitura');
     }
     const meses = [...Object.keys(fbHig), ...Object.keys(fbRet)];
     const ultima = meses.sort().pop() || '';
