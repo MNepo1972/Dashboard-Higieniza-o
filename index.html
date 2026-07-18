@@ -10,10 +10,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0d0f14;--surface:#141720;--border:#1e2330;
-  --text:#e8eaf0;--muted:#5a6070;
-  --green:#2ecc71;--yellow:#f0b429;--red:#e74c3c;--blue:#3b82f6;--cyan:#06b6d4;
-  --bar-ret:#334155;--bar-cap1:rgba(240,180,41,0.25);--bar-cap3:rgba(59,130,246,0.18);
+  --bg:#F6F4EF;--surface:#FFFFFF;--border:#E3DED3;
+  --text:#1F3A10;--muted:#8A9179;
+  --green:#2D5016;--accent:#FF6B35;--yellow:#F77F00;--red:#D64545;--blue:#2F6F8F;--cyan:#2A9D8F;
+  --ok:#52B788;
+  --bar-ret:#D9D3C6;--bar-cap1:rgba(247,127,0,0.28);--bar-cap3:rgba(47,111,143,0.22);
+  --shadow:0 1px 2px rgba(31,58,16,.04),0 4px 16px rgba(31,58,16,.06);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;min-height:100vh;padding:24px;}
@@ -22,22 +24,22 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font
 .up-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:32px;color:var(--green);letter-spacing:1px;}
 .up-sub{font-size:13px;color:var(--muted);letter-spacing:0.5px;text-align:center;max-width:500px;line-height:1.6;}
 .up-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:580px;}
-.up-card{background:var(--surface);border:2px dashed var(--border);border-radius:12px;padding:28px 24px;text-align:center;cursor:pointer;transition:all .2s;position:relative;}
-.up-card:hover,.up-card.drag-over{border-color:var(--green);background:rgba(46,204,113,0.04);}
-.up-card.done{border-color:var(--green);border-style:solid;background:rgba(46,204,113,0.06);}
+.up-card{background:var(--surface);border:2px dashed var(--border);border-radius:12px;padding:28px 24px;text-align:center;cursor:pointer;transition:all .2s;position:relative;box-shadow:var(--shadow)}
+.up-card:hover,.up-card.drag-over{border-color:var(--green);background:rgba(45,80,22,0.04);}
+.up-card.done{border-color:var(--green);border-style:solid;background:rgba(45,80,22,0.06);}
 .up-card input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
 .up-icon{font-size:32px;margin-bottom:10px;display:block;}
 .up-card-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:0.5px;margin-bottom:4px;}
 .up-card-sub{font-size:11px;color:var(--muted);line-height:1.5;}
 .up-status{font-size:11px;margin-top:8px;min-height:16px;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.5px;}
 .up-status.ok{color:var(--green);} .up-status.err{color:var(--red);}
-.btn-principal{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:1px;padding:12px 36px;border-radius:8px;border:none;cursor:pointer;background:var(--green);color:#000;transition:all .2s;opacity:.4;pointer-events:none;}
+.btn-principal{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:1px;padding:12px 36px;border-radius:8px;border:none;cursor:pointer;background:var(--green);color:#fff;transition:all .2s;opacity:.4;pointer-events:none;}
 .btn-principal.ready{opacity:1;pointer-events:all;}
-.btn-principal.ready:hover{background:#27ae60;}
+.btn-principal.ready:hover{background:#24400F;}
 .btn-ver{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:12px;letter-spacing:1px;padding:8px 20px;border-radius:6px;border:1px solid var(--border);cursor:pointer;background:transparent;color:var(--muted);transition:all .2s;}
 .btn-ver:hover{border-color:var(--blue);color:var(--blue);}
 
-.sync-bar{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 16px;margin-bottom:14px;gap:12px;flex-wrap:wrap;}
+.sync-bar{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 16px;margin-bottom:14px;gap:12px;flex-wrap:wrap;box-shadow:var(--shadow);}
 .sync-left{display:flex;align-items:center;gap:8px;}
 .sync-dot{width:7px;height:7px;border-radius:50%;background:var(--muted);flex-shrink:0;}
 .sync-dot.online{background:var(--green);}
@@ -45,10 +47,10 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font
 .sync-dot.online{animation:pulse 2s infinite;}
 .sync-txt{font-size:11px;color:var(--muted);font-family:'Barlow Condensed',sans-serif;letter-spacing:0.5px;}
 .sync-right{display:flex;align-items:center;gap:8px;}
-.btn-atualizar{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;padding:6px 14px;border-radius:5px;border:1px solid var(--green);color:var(--green);background:rgba(46,204,113,0.06);cursor:pointer;transition:all .2s;}
-.btn-atualizar:hover{background:rgba(46,204,113,0.15);}
-.btn-salvar{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;padding:6px 14px;border-radius:5px;border:1px solid var(--blue);color:var(--blue);background:rgba(59,130,246,0.06);cursor:pointer;transition:all .2s;display:none;}
-.btn-salvar:hover{background:rgba(59,130,246,0.15);}
+.btn-atualizar{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;padding:6px 14px;border-radius:5px;border:1px solid var(--green);color:var(--green);background:rgba(45,80,22,0.06);cursor:pointer;transition:all .2s;}
+.btn-atualizar:hover{background:rgba(45,80,22,0.15);}
+.btn-salvar{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;padding:6px 14px;border-radius:5px;border:1px solid var(--blue);color:var(--blue);background:rgba(47,111,143,0.06);cursor:pointer;transition:all .2s;display:none;}
+.btn-salvar:hover{background:rgba(47,111,143,0.15);}
 .btn-salvar:disabled{opacity:.4;cursor:not-allowed;}
 
 .header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid var(--border);}
@@ -58,21 +60,21 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font
 .header-info{text-align:right;font-size:11px;color:var(--muted);}
 .header-info strong{font-family:'Barlow Condensed',sans-serif;font-size:18px;color:var(--text);display:block;}
 
-.filter-bar{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 18px;margin-bottom:20px;flex-wrap:wrap;}
+.filter-bar{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 18px;margin-bottom:20px;flex-wrap:wrap;box-shadow:var(--shadow);}
 .filter-label{font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);white-space:nowrap;}
 .month-btns{display:flex;gap:6px;flex-wrap:wrap;}
 .mbtn{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;padding:5px 14px;border-radius:5px;cursor:pointer;background:transparent;border:1px solid var(--border);color:var(--muted);transition:all .2s;letter-spacing:0.5px;}
 .mbtn:hover{border-color:var(--green);color:var(--text);}
-.mbtn.active{background:rgba(46,204,113,0.12);border-color:var(--green);color:var(--green);}
+.mbtn.active{background:rgba(45,80,22,0.12);border-color:var(--green);color:var(--green);}
 .filter-sep{width:1px;height:28px;background:var(--border);}
 .quick-btns{display:flex;gap:6px;}
-.qbtn{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;padding:5px 12px;border-radius:5px;cursor:pointer;letter-spacing:0.5px;background:rgba(59,130,246,0.10);border:1px solid rgba(59,130,246,0.3);color:var(--blue);transition:all .2s;}
-.qbtn:hover{background:rgba(59,130,246,0.20);}
+.qbtn{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;padding:5px 12px;border-radius:5px;cursor:pointer;letter-spacing:0.5px;background:rgba(47,111,143,0.10);border:1px solid rgba(47,111,143,0.3);color:var(--blue);transition:all .2s;}
+.qbtn:hover{background:rgba(47,111,143,0.20);}
 .filter-result{margin-left:auto;font-size:11px;color:var(--muted);}
 .filter-result strong{color:var(--text);font-family:'Barlow Condensed',sans-serif;font-size:14px;}
 
 .kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;}
-.kpi{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px 16px;position:relative;overflow:hidden;}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px 16px;position:relative;overflow:hidden;box-shadow:var(--shadow);}
 .kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:10px 10px 0 0;}
 .kpi.green::before{background:var(--green);} .kpi.red::before{background:var(--red);}
 .kpi.yellow::before{background:var(--yellow);} .kpi.blue::before{background:var(--blue);}
@@ -82,13 +84,13 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font
 .kpi.yellow .kpi-value{color:var(--yellow);} .kpi.blue .kpi-value{color:var(--blue);}
 .kpi-sub{font-size:11px;color:var(--muted);}
 .kpi-badge{display:inline-block;font-size:10px;font-weight:600;padding:2px 7px;border-radius:3px;margin-top:6px;}
-.badge-red{background:rgba(231,76,60,0.15);color:var(--red);}
-.badge-green{background:rgba(46,204,113,0.15);color:var(--green);}
-.badge-yellow{background:rgba(240,180,41,0.15);color:var(--yellow);}
-.badge-blue{background:rgba(59,130,246,0.15);color:var(--blue);}
+.badge-red{background:rgba(214,69,69,0.15);color:var(--red);}
+.badge-green{background:rgba(45,80,22,0.15);color:var(--green);}
+.badge-yellow{background:rgba(247,127,0,0.15);color:var(--yellow);}
+.badge-blue{background:rgba(47,111,143,0.15);color:var(--blue);}
 
 .mid-row{display:grid;grid-template-columns:1fr 340px;gap:14px;margin-bottom:20px;}
-.panel{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px 22px 18px;}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px 22px 18px;box-shadow:var(--shadow)}
 .panel-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:18px;display:flex;align-items:center;gap:8px;}
 .panel-title .dot{width:6px;height:6px;border-radius:50%;}
 .bar-chart{width:100%;}
@@ -121,9 +123,9 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font
 .ceasa-diff-label{font-size:9px;color:var(--muted);margin-top:2px;}
 
 .bot-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
-.insight-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px;}
+.insight-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px;box-shadow:var(--shadow);}
 .insight-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
-.insight-item{display:flex;align-items:flex-start;gap:8px;margin-bottom:10px;font-size:12px;line-height:1.5;color:#adb5c7;}
+.insight-item{display:flex;align-items:flex-start;gap:8px;margin-bottom:10px;font-size:12px;line-height:1.5;color:#4A5940;}
 .insight-icon{font-size:14px;flex-shrink:0;margin-top:1px;}
 .trend-line-wrap{position:relative;height:70px;margin-top:8px;}
 svg.trend-svg{width:100%;height:100%;overflow:visible;}
@@ -134,9 +136,9 @@ svg.trend-svg{width:100%;height:100%;overflow:visible;}
 .gauge-label-val{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;}
 .gauge-label-sub{font-size:9px;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-top:2px;}
 
-#modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:100;align-items:center;justify-content:center;}
+#modal-overlay{display:none;position:fixed;inset:0;background:rgba(31,58,16,.45);z-index:100;align-items:center;justify-content:center;}
 #modal-overlay.open{display:flex;}
-.modal{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px 32px;width:560px;max-width:95vw;}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px 32px;width:560px;max-width:95vw;box-shadow:var(--shadow);}
 .modal-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;margin-bottom:6px;color:var(--green);}
 .modal-sub{font-size:12px;color:var(--muted);margin-bottom:20px;line-height:1.6;}
 .modal-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
@@ -200,7 +202,7 @@ svg.trend-svg{width:100%;height:100%;overflow:visible;}
       <span id="sync-ultima" style="font-size:11px;color:var(--muted);font-family:&#39;Barlow Condensed&#39;,sans-serif;"></span>
       <button class="btn-atualizar" onclick="abrirModal()">↑ ATUALIZAR DADOS</button>
       <button class="btn-salvar" id="btn-salvar" onclick="salvarFirebase()">💾 SALVAR NO SERVIDOR</button>
-      <button class="btn-atualizar" style="border-color:var(--red);color:var(--red);background:rgba(231,76,60,0.06);" onclick="abrirModalReset()">⚠ REESCREVER TUDO</button>
+      <button class="btn-atualizar" style="border-color:var(--red);color:var(--red);background:rgba(214,69,69,0.06);" onclick="abrirModalReset()">⚠ REESCREVER TUDO</button>
     </div>
   </div>
 
@@ -377,7 +379,7 @@ svg.trend-svg{width:100%;height:100%;overflow:visible;}
           <div class="ceasa-metric-val" style="color:var(--green);font-size:16px;">+1.133</div>
           <div class="ceasa-diff-label">recebeu mais que expediu</div>
         </div>
-      </div></div><div style="background:rgba(6,182,212,0.05);border-radius:6px;padding:10px;border:1px solid rgba(6,182,212,0.15);">
+      </div></div><div style="background:rgba(42,157,143,0.05);border-radius:6px;padding:10px;border:1px solid rgba(42,157,143,0.15);">
       <div class="ceasa-metric-label" style="margin-bottom:6px;">Total CEASA — Período</div>
       <div style="display:flex;justify-content:space-between;">
         <div><div class="ceasa-metric-val exp" style="font-size:22px;">13.329</div><div class="ceasa-metric-label">expedido</div></div>
@@ -389,7 +391,7 @@ svg.trend-svg{width:100%;height:100%;overflow:visible;}
   <div class="bot-row">
     <div class="insight-card">
       <div class="insight-title">Tendência — % Higienização por Mês</div>
-      <div class="trend-line-wrap"><svg class="trend-svg" id="trendSvg" viewBox="0 0 280 70" preserveAspectRatio="none"><path d="M14,56 L14,56 L35,56 L56,56 L77,56 L98,56 L119,56 L140,56 L161,41.500305540330444 L182,50.179594196774225 L203,46.70467312230982 L224,29.762783644466936 L245,14 L266,39.90492269373287 L266,56 Z" fill="rgba(46,204,113,0.10)"></path><path d="M14,56 L35,56 L56,56 L77,56 L98,56 L119,56 L140,56 L161,41.500305540330444 L182,50.179594196774225 L203,46.70467312230982 L224,29.762783644466936 L245,14 L266,39.90492269373287" stroke="#2ecc71" stroke-width="2" fill="none"></path><circle cx="14" cy="56" r="4" fill="#e74c3c"></circle><text x="14" y="48" text-anchor="middle" font-size="9" fill="#8090a8" font-family="Barlow Condensed,sans-serif">0.0%</text><text x="14" y="70" text-anchor="middle" font-size="9" fill="#5a6070" font-family="Barlow Condensed,sans-serif">Jan/25</text><circle cx="35" cy="56" r="4" fill="#e74c3c"></circle><text x="35" y="48" text-anchor="middle" font-size="9" fill="#8090a8" font-family="Barlow Condensed,sans-serif">0.0%</text><text x="35" y="70" text-anchor="middle" font-size="9" fill="#5a6070" font-family="Barlow Condensed,sans-serif">Jul/25</text><circle cx="56" cy="56" r="4" fill="#e74c3c"></circle><text x="56" y="48" text-anchor="middle" font-size="9" fill="#8090a8" font-family="Barlow Condensed,sans-serif">0.0%</text><text x="56" y="70" text-anchor="middle" font-size="9" fill="#5a6070" font-family="Barlow Condensed,sans-serif">Ago/25</text><circle cx="77" cy="56" r="4" fill="#e74c3c"></circle><text x="77" y="48" text-anchor="middle" font-size="9" fill="#8090a8" font-family="Barlow Condensed,sans-serif">0.0%</text><text x="77" y="70" text-anchor="middle" font-size="9" fill="#5a6070" font-family="Barlow Condensed,sans-serif">Set/25</text><circle cx="98" cy="56" r="4" fill="#e74c3c"></circle><text x="98" y="48" text-anchor="middle" font-size="9" fill="#8090a8" font-family="Barlow Condensed,sans-serif">0.0%</text><text x="98" y="70" text-anchor="middle" font-size="9" fill="#5a6070" font-family="Barlow Condensed,sans-serif">Out/25</text><circle cx="119" cy="56" r="4" fill="#e74c3c"></circle><text x="119" y="48" text-anchor="middle" font-size="9" fill="#8090a8" font-family="Barlow Condensed,sans-serif">0.0%</text><text x="119" y="70" text-anchor="middle" font-size="9" fill="#5a6070" font-family="Barlow Condensed,sans-serif">Nov/25</text><circle cx="140" cy="56" r="4" fill="#e74c3c"></circle><text x="140" y="48" text-anchor="middle" font-size="9" fill="#8090a8" font-family="Barlow Condensed,sans-serif">0.0%</text><text x="140" y="70" text-anchor="middle" font-size="9" fill="#5a6070" font-family="Barlow Condensed,sans-serif">Dez/25</text><circle cx="161" cy="41.500305540330444" r="4" fill="#f0b429"></circle><text x="161" y="33.500305540330444" text-anchor="middle" font-size="9" fill="#8090a8" font-family="Barlow Condensed,sans-serif">10.3%</text><text x="161" y="70" text-anchor="middle" font-size="9" fill="#5a6070" font-family="Barlow Condensed,sans-serif">Jan/26</text><circle cx="182" cy="50.179594196774225" r="4" fill="#e74c3c"></circle><text x="182" y="42.179594196774225" text-anchor="middle" font-size="9" fill="#8090a8" font-family="Barlow Condensed,sans-serif">4.1%</text><text x="182" y="70" text-anchor="middle" font-size="9" fill="#5a6070" font-family="Barlow Condensed,sans-serif">Fev/26</text><circle cx="203" cy="46.70467312230982" r="4" fill="#e74c3c"></circle><text x="203" y="38.70467312230982" text-anchor="middle" font-size="9" fill="#8090a8" font-family="Barlow Condensed,sans-serif">6.6%</text><text x="203" y="70" text-anchor="middle" font-size="9" fill="#5a6070" font-family="Barlow Condensed,sans-serif">Mar/26</text><circle cx="224" cy="29.762783644466936" r="4" fill="#f0b429"></circle><text x="224" y="21.762783644466936" text-anchor="middle" font-size="9" fill="#8090a8" font-family="Barlow Condensed,sans-serif">18.6%</text><text x="224" y="70" text-anchor="middle" font-size="9" fill="#5a6070" font-family="Barlow Condensed,sans-serif">Abr/26</text><circle cx="245" cy="14" r="4" fill="#2ecc71"></circle><text x="245" y="6" text-anchor="middle" font-size="9" fill="#8090a8" font-family="Barlow Condensed,sans-serif">29.8%</text><text x="245" y="70" text-anchor="middle" font-size="9" fill="#5a6070" font-family="Barlow Condensed,sans-serif">Mai/26</text><circle cx="266" cy="39.90492269373287" r="4" fill="#f0b429"></circle><text x="266" y="31.90492269373287" text-anchor="middle" font-size="9" fill="#8090a8" font-family="Barlow Condensed,sans-serif">11.4%</text><text x="266" y="70" text-anchor="middle" font-size="9" fill="#5a6070" font-family="Barlow Condensed,sans-serif">Jun/26</text></svg></div>
+      <div class="trend-line-wrap"><svg class="trend-svg" id="trendSvg" viewBox="0 0 280 70" preserveAspectRatio="none"><path d="M14,56 L14,56 L35,56 L56,56 L77,56 L98,56 L119,56 L140,56 L161,41.500305540330444 L182,50.179594196774225 L203,46.70467312230982 L224,29.762783644466936 L245,14 L266,39.90492269373287 L266,56 Z" fill="rgba(45,80,22,0.10)"></path><path d="M14,56 L35,56 L56,56 L77,56 L98,56 L119,56 L140,56 L161,41.500305540330444 L182,50.179594196774225 L203,46.70467312230982 L224,29.762783644466936 L245,14 L266,39.90492269373287" stroke="#2D5016" stroke-width="2" fill="none"></path><circle cx="14" cy="56" r="4" fill="#D64545"></circle><text x="14" y="48" text-anchor="middle" font-size="9" fill="#6E7A5E" font-family="Barlow Condensed,sans-serif">0.0%</text><text x="14" y="70" text-anchor="middle" font-size="9" fill="#8A9179" font-family="Barlow Condensed,sans-serif">Jan/25</text><circle cx="35" cy="56" r="4" fill="#D64545"></circle><text x="35" y="48" text-anchor="middle" font-size="9" fill="#6E7A5E" font-family="Barlow Condensed,sans-serif">0.0%</text><text x="35" y="70" text-anchor="middle" font-size="9" fill="#8A9179" font-family="Barlow Condensed,sans-serif">Jul/25</text><circle cx="56" cy="56" r="4" fill="#D64545"></circle><text x="56" y="48" text-anchor="middle" font-size="9" fill="#6E7A5E" font-family="Barlow Condensed,sans-serif">0.0%</text><text x="56" y="70" text-anchor="middle" font-size="9" fill="#8A9179" font-family="Barlow Condensed,sans-serif">Ago/25</text><circle cx="77" cy="56" r="4" fill="#D64545"></circle><text x="77" y="48" text-anchor="middle" font-size="9" fill="#6E7A5E" font-family="Barlow Condensed,sans-serif">0.0%</text><text x="77" y="70" text-anchor="middle" font-size="9" fill="#8A9179" font-family="Barlow Condensed,sans-serif">Set/25</text><circle cx="98" cy="56" r="4" fill="#D64545"></circle><text x="98" y="48" text-anchor="middle" font-size="9" fill="#6E7A5E" font-family="Barlow Condensed,sans-serif">0.0%</text><text x="98" y="70" text-anchor="middle" font-size="9" fill="#8A9179" font-family="Barlow Condensed,sans-serif">Out/25</text><circle cx="119" cy="56" r="4" fill="#D64545"></circle><text x="119" y="48" text-anchor="middle" font-size="9" fill="#6E7A5E" font-family="Barlow Condensed,sans-serif">0.0%</text><text x="119" y="70" text-anchor="middle" font-size="9" fill="#8A9179" font-family="Barlow Condensed,sans-serif">Nov/25</text><circle cx="140" cy="56" r="4" fill="#D64545"></circle><text x="140" y="48" text-anchor="middle" font-size="9" fill="#6E7A5E" font-family="Barlow Condensed,sans-serif">0.0%</text><text x="140" y="70" text-anchor="middle" font-size="9" fill="#8A9179" font-family="Barlow Condensed,sans-serif">Dez/25</text><circle cx="161" cy="41.500305540330444" r="4" fill="#F77F00"></circle><text x="161" y="33.500305540330444" text-anchor="middle" font-size="9" fill="#6E7A5E" font-family="Barlow Condensed,sans-serif">10.3%</text><text x="161" y="70" text-anchor="middle" font-size="9" fill="#8A9179" font-family="Barlow Condensed,sans-serif">Jan/26</text><circle cx="182" cy="50.179594196774225" r="4" fill="#D64545"></circle><text x="182" y="42.179594196774225" text-anchor="middle" font-size="9" fill="#6E7A5E" font-family="Barlow Condensed,sans-serif">4.1%</text><text x="182" y="70" text-anchor="middle" font-size="9" fill="#8A9179" font-family="Barlow Condensed,sans-serif">Fev/26</text><circle cx="203" cy="46.70467312230982" r="4" fill="#D64545"></circle><text x="203" y="38.70467312230982" text-anchor="middle" font-size="9" fill="#6E7A5E" font-family="Barlow Condensed,sans-serif">6.6%</text><text x="203" y="70" text-anchor="middle" font-size="9" fill="#8A9179" font-family="Barlow Condensed,sans-serif">Mar/26</text><circle cx="224" cy="29.762783644466936" r="4" fill="#F77F00"></circle><text x="224" y="21.762783644466936" text-anchor="middle" font-size="9" fill="#6E7A5E" font-family="Barlow Condensed,sans-serif">18.6%</text><text x="224" y="70" text-anchor="middle" font-size="9" fill="#8A9179" font-family="Barlow Condensed,sans-serif">Abr/26</text><circle cx="245" cy="14" r="4" fill="#2D5016"></circle><text x="245" y="6" text-anchor="middle" font-size="9" fill="#6E7A5E" font-family="Barlow Condensed,sans-serif">29.8%</text><text x="245" y="70" text-anchor="middle" font-size="9" fill="#8A9179" font-family="Barlow Condensed,sans-serif">Mai/26</text><circle cx="266" cy="39.90492269373287" r="4" fill="#F77F00"></circle><text x="266" y="31.90492269373287" text-anchor="middle" font-size="9" fill="#6E7A5E" font-family="Barlow Condensed,sans-serif">11.4%</text><text x="266" y="70" text-anchor="middle" font-size="9" fill="#8A9179" font-family="Barlow Condensed,sans-serif">Jun/26</text></svg></div>
       <div style="display:flex;justify-content:space-between;margin-top:10px;" id="trendStats">
     <div style="text-align:center"><div style="font-family:&#39;Barlow Condensed&#39;,sans-serif;font-size:20px;font-weight:700;color:var(--red)">0,0%</div><div style="font-size:9px;color:var(--muted)">PIOR (Jan/25)</div></div>
     <div style="text-align:center"><div style="font-family:&#39;Barlow Condensed&#39;,sans-serif;font-size:20px;font-weight:700;color:var(--green)">29,8%</div><div style="font-size:9px;color:var(--muted)">MELHOR (Mai/26)</div></div>
@@ -398,7 +400,7 @@ svg.trend-svg{width:100%;height:100%;overflow:visible;}
     <div class="insight-card">
       <div class="insight-title">Capacidade da Máquina vs. Uso Real</div>
       <div class="gauge-wrap">
-        <svg class="gauge-svg" viewBox="0 0 160 90" id="gaugeSvg"><path d="M 20 80 A 60 60 0 0 1 140 80" stroke="#1e2330" stroke-width="14" fill="none"></path><path d="M 20 80 A 60 60 0 0 1 45.737556874560546 30.74469580769979" stroke="rgba(240,180,41,0.35)" stroke-width="14" fill="none" stroke-linecap="round"></path><path d="M 20 80 A 60 60 0 0 1 22.65330299771754 62.35470762700693" stroke="#2ecc71" stroke-width="14" fill="none" stroke-linecap="round"></path><text x="80" y="70" text-anchor="middle" font-size="18" font-family="Barlow Condensed,sans-serif" font-weight="700" fill="#2ecc71">9,5 %</text><text x="80" y="86" text-anchor="middle" font-size="9" font-family="Barlow,sans-serif" fill="#5a6070">uso médio/mês</text></svg>
+        <svg class="gauge-svg" viewBox="0 0 160 90" id="gaugeSvg"><path d="M 20 80 A 60 60 0 0 1 140 80" stroke="#E3DED3" stroke-width="14" fill="none"></path><path d="M 20 80 A 60 60 0 0 1 45.737556874560546 30.74469580769979" stroke="rgba(247,127,0,0.35)" stroke-width="14" fill="none" stroke-linecap="round"></path><path d="M 20 80 A 60 60 0 0 1 22.65330299771754 62.35470762700693" stroke="#2D5016" stroke-width="14" fill="none" stroke-linecap="round"></path><text x="80" y="70" text-anchor="middle" font-size="18" font-family="Barlow Condensed,sans-serif" font-weight="700" fill="#2D5016">9,5 %</text><text x="80" y="86" text-anchor="middle" font-size="9" font-family="Barlow,sans-serif" fill="#8A9179">uso médio/mês</text></svg>
         <div class="gauge-labels">
           <div class="gauge-label-item"><div class="gauge-label-val" style="color:var(--green)" id="gaugeHigVal">40.493</div><div class="gauge-label-sub" id="gaugeHigLabel">média/mês Jan/25–Jun/26</div></div>
           <div class="gauge-label-item"><div class="gauge-label-val" style="color:var(--blue)">426.173</div><div class="gauge-label-sub">cap. máx. 3 turnos</div></div>
@@ -453,10 +455,10 @@ svg.trend-svg{width:100%;height:100%;overflow:visible;}
 
 
 <!-- MODAL REESCREVER TUDO -->
-<div id="modal-reset-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:200;align-items:center;justify-content:center;">
+<div id="modal-reset-overlay" style="display:none;position:fixed;inset:0;background:rgba(31,58,16,.55);z-index:200;align-items:center;justify-content:center;">
   <div class="modal" style="border-color:var(--red);">
     <div class="modal-title" style="color:var(--red);">⚠ Reescrever Dados do Servidor</div>
-    <div class="modal-sub" style="color:#e8a0a0;">Isso apaga e reescreve a <b>higienização</b> do zero com a planilha abaixo.<br>O histórico de retorno (planilhas até Jun/26) é preservado; Jul/26 em diante vem do GODMODE.</div>
+    <div class="modal-sub" style="color:#B03030;">Isso apaga e reescreve a <b>higienização</b> do zero com a planilha abaixo.<br>O histórico de retorno (planilhas até Jun/26) é preservado; Jul/26 em diante vem do GODMODE.</div>
     <div class="modal-cards" style="grid-template-columns:1fr;">
       <div class="modal-card" id="rcard-hig">
         <input type="file" accept=".xlsx,.xls" id="rfile-hig">
@@ -1073,7 +1075,7 @@ function renderCeasa(data){
   });
   if(cd.length>1){
     const cresc=cd.length>=2?((cd[cd.length-1].ceasaExp/cd[0].ceasaExp-1)*100).toFixed(0):null;
-    html+=`<div style="background:rgba(6,182,212,0.05);border-radius:6px;padding:10px;border:1px solid rgba(6,182,212,0.15);">
+    html+=`<div style="background:rgba(42,157,143,0.05);border-radius:6px;padding:10px;border:1px solid rgba(42,157,143,0.15);">
       <div class="ceasa-metric-label" style="margin-bottom:6px;">Total CEASA — Período</div>
       <div style="display:flex;justify-content:space-between;">
         <div><div class="ceasa-metric-val exp" style="font-size:22px;">${fmt(tExp)}</div><div class="ceasa-metric-label">expedido</div></div>
@@ -1087,7 +1089,7 @@ function renderTrend(data){
   const svg=document.getElementById('trendSvg'); svg.innerHTML='';
   if(data.length<2){
     const t=document.createElementNS('http://www.w3.org/2000/svg','text');
-    t.setAttribute('x','140');t.setAttribute('y','35');t.setAttribute('text-anchor','middle');t.setAttribute('font-size','11');t.setAttribute('fill','#5a6070');
+    t.setAttribute('x','140');t.setAttribute('y','35');t.setAttribute('text-anchor','middle');t.setAttribute('font-size','11');t.setAttribute('fill','#8A9179');
     t.textContent='Selecione 2+ meses'; svg.appendChild(t); return;
   }
   const pcts=data.map(d=>d.retorno?(d.higOba+d.ceasaRec)/d.retorno*100:0);
@@ -1096,19 +1098,19 @@ function renderTrend(data){
   const ys=pcts.map(p=>H-pad-(p-minP)/range*(H-2*pad));
   const aEl=document.createElementNS('http://www.w3.org/2000/svg','path');
   aEl.setAttribute('d',`M${xs[0]},${H-pad} `+xs.map((x,i)=>`L${x},${ys[i]}`).join(' ')+` L${xs[xs.length-1]},${H-pad} Z`);
-  aEl.setAttribute('fill','rgba(46,204,113,0.10)'); svg.appendChild(aEl);
+  aEl.setAttribute('fill','rgba(45,80,22,0.10)'); svg.appendChild(aEl);
   const lEl=document.createElementNS('http://www.w3.org/2000/svg','path');
   lEl.setAttribute('d',xs.map((x,i)=>(i===0?'M':'L')+x+','+ys[i]).join(' '));
-  lEl.setAttribute('stroke','#2ecc71');lEl.setAttribute('stroke-width','2');lEl.setAttribute('fill','none'); svg.appendChild(lEl);
+  lEl.setAttribute('stroke','#2D5016');lEl.setAttribute('stroke-width','2');lEl.setAttribute('fill','none'); svg.appendChild(lEl);
   pcts.forEach((p,i)=>{
-    const col=p<10?'#e74c3c':p<20?'#f0b429':'#2ecc71';
+    const col=p<10?'#D64545':p<20?'#F77F00':'#2D5016';
     const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
     c.setAttribute('cx',xs[i]);c.setAttribute('cy',ys[i]);c.setAttribute('r','4');c.setAttribute('fill',col); svg.appendChild(c);
     const t=document.createElementNS('http://www.w3.org/2000/svg','text');
-    t.setAttribute('x',xs[i]);t.setAttribute('y',ys[i]-8);t.setAttribute('text-anchor','middle');t.setAttribute('font-size','9');t.setAttribute('fill','#8090a8');t.setAttribute('font-family','Barlow Condensed,sans-serif');
+    t.setAttribute('x',xs[i]);t.setAttribute('y',ys[i]-8);t.setAttribute('text-anchor','middle');t.setAttribute('font-size','9');t.setAttribute('fill','#6E7A5E');t.setAttribute('font-family','Barlow Condensed,sans-serif');
     t.textContent=p.toFixed(1)+'%'; svg.appendChild(t);
     const ml=document.createElementNS('http://www.w3.org/2000/svg','text');
-    ml.setAttribute('x',xs[i]);ml.setAttribute('y',H);ml.setAttribute('text-anchor','middle');ml.setAttribute('font-size','9');ml.setAttribute('fill','#5a6070');ml.setAttribute('font-family','Barlow Condensed,sans-serif');
+    ml.setAttribute('x',xs[i]);ml.setAttribute('y',H);ml.setAttribute('text-anchor','middle');ml.setAttribute('font-size','9');ml.setAttribute('fill','#8A9179');ml.setAttribute('font-family','Barlow Condensed,sans-serif');
     ml.textContent=data[i].label; svg.appendChild(ml);
   });
   const worst=Math.min(...pcts),best=Math.max(...pcts);
@@ -1125,7 +1127,7 @@ function renderGauge(avgHig,capUso,data){
   const cx=80,cy=80,r=60,sw=14;
   const bg=document.createElementNS('http://www.w3.org/2000/svg','path');
   bg.setAttribute('d',`M ${cx-r} ${cy} A ${r} ${r} 0 0 1 ${cx+r} ${cy}`);
-  bg.setAttribute('stroke','#1e2330');bg.setAttribute('stroke-width',sw);bg.setAttribute('fill','none'); g.appendChild(bg);
+  bg.setAttribute('stroke','#E3DED3');bg.setAttribute('stroke-width',sw);bg.setAttribute('fill','none'); g.appendChild(bg);
   function arc(pv,col){
     if(pv<=0)return; const cl=Math.min(pv,.9999),angle=cl*Math.PI;
     const x=cx+r*Math.cos(Math.PI+angle),y=cy+r*Math.sin(Math.PI+angle);
@@ -1133,12 +1135,12 @@ function renderGauge(avgHig,capUso,data){
     el.setAttribute('d',`M ${cx-r} ${cy} A ${r} ${r} 0 0 1 ${x} ${y}`);
     el.setAttribute('stroke',col);el.setAttribute('stroke-width',sw);el.setAttribute('fill','none');el.setAttribute('stroke-linecap','round'); g.appendChild(el);
   }
-  arc(cap1/cap3,'rgba(240,180,41,0.35)'); arc(avgHig/cap3,'#2ecc71');
+  arc(cap1/cap3,'rgba(247,127,0,0.35)'); arc(avgHig/cap3,'#2D5016');
   const lbl=document.createElementNS('http://www.w3.org/2000/svg','text');
-  lbl.setAttribute('x',cx);lbl.setAttribute('y',cy-10);lbl.setAttribute('text-anchor','middle');lbl.setAttribute('font-size','18');lbl.setAttribute('font-family','Barlow Condensed,sans-serif');lbl.setAttribute('font-weight','700');lbl.setAttribute('fill','#2ecc71');
+  lbl.setAttribute('x',cx);lbl.setAttribute('y',cy-10);lbl.setAttribute('text-anchor','middle');lbl.setAttribute('font-size','18');lbl.setAttribute('font-family','Barlow Condensed,sans-serif');lbl.setAttribute('font-weight','700');lbl.setAttribute('fill','#2D5016');
   lbl.textContent=capUso.toFixed(1).replace('.',',')+' %'; g.appendChild(lbl);
   const lbl2=document.createElementNS('http://www.w3.org/2000/svg','text');
-  lbl2.setAttribute('x',cx);lbl2.setAttribute('y',cy+6);lbl2.setAttribute('text-anchor','middle');lbl2.setAttribute('font-size','9');lbl2.setAttribute('font-family','Barlow,sans-serif');lbl2.setAttribute('fill','#5a6070');
+  lbl2.setAttribute('x',cx);lbl2.setAttribute('y',cy+6);lbl2.setAttribute('text-anchor','middle');lbl2.setAttribute('font-size','9');lbl2.setAttribute('font-family','Barlow,sans-serif');lbl2.setAttribute('fill','#8A9179');
   lbl2.textContent='uso médio/mês'; g.appendChild(lbl2);
   const mLabel=data.length===1?data[0].label:`${data[0].label}–${data[data.length-1].label}`;
   document.getElementById('gaugeHigVal').textContent=fmtM(avgHig);
