@@ -102,9 +102,9 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font
 .bar-fill.retorno{background:var(--bar-ret);} .bar-fill.higienizado{background:var(--green);}
 .bar-fill.cap1turno{background:var(--bar-cap1);border:1px dashed var(--yellow);}
 .bar-fill.cap3turnos{background:var(--bar-cap3);border:1px dashed var(--blue);}
-.bar-val{font-family:'Barlow Condensed',sans-serif;font-size:12px;color:var(--muted);white-space:nowrap;}
+.bar-val{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--muted);white-space:nowrap;}
 .bar-val.highlight{color:var(--green);font-weight:700;}
-.pct-col{width:56px;text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;flex-shrink:0;}
+.pct-col{width:60px;text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;flex-shrink:0;}
 .legend{display:flex;gap:16px;margin-top:10px;flex-wrap:wrap;}
 .legend-item{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--muted);}
 .legend-swatch{width:14px;height:8px;border-radius:2px;}
@@ -173,6 +173,53 @@ svg.trend-svg{width:100%;height:100%;overflow:visible;}
 .btn-modal-save{background:var(--blue);border:none;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;padding:8px 22px;border-radius:6px;cursor:pointer;opacity:.4;transition:all .2s;}
 .btn-modal-save.ready{opacity:1;}
 .btn-modal-save:disabled{opacity:.4;cursor:not-allowed;}
+
+/* ===== FILTRO DE PERÍODO ===== */
+.range-box{display:flex;align-items:center;gap:8px;}
+.range-box label{font-size:10px;letter-spacing:1.1px;text-transform:uppercase;color:var(--muted);}
+.range-box input{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;padding:5px 8px;
+  border:1px solid var(--border);border-radius:5px;background:var(--bg);color:var(--text);}
+.range-box input:focus{outline:none;border-color:var(--green);}
+.filter-bar{flex-wrap:wrap;}
+.qbtn.on{background:rgba(45,80,22,0.14);border-color:var(--green);color:var(--green);}
+/* ===== ABAS ===== */
+.tabs{display:flex;gap:4px;margin-bottom:16px;border-bottom:1px solid var(--border);}
+.tab{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:.6px;text-transform:uppercase;
+     padding:10px 20px;cursor:pointer;background:transparent;border:none;border-bottom:3px solid transparent;color:var(--muted);}
+.tab:hover{color:var(--text);}
+.tab.active{color:var(--green);border-bottom-color:var(--green);}
+.page{display:none;} .page.active{display:block;}
+/* ===== COLUNAS AGRUPADAS ===== */
+.col-chart{width:100%;overflow-x:auto;}
+.col-svg{width:100%;height:440px;display:block;}
+.col-chart{padding-bottom:6px;}
+.kpi-strip.k5{grid-template-columns:repeat(5,1fr);}
+.kpi.cyan::before{background:var(--cyan);} .kpi.cyan .kpi-value{color:var(--cyan);}
+.badge-cyan{background:rgba(42,157,143,0.15);color:var(--cyan);}
+/* ===== CUSTOS ===== */
+.cost-bar{display:flex;align-items:center;gap:18px;background:var(--surface);border:1px solid var(--border);
+          border-radius:10px;padding:14px 20px;margin-bottom:20px;box-shadow:var(--shadow);flex-wrap:wrap;}
+.cost-field{display:flex;align-items:center;gap:8px;}
+.cost-field label{font-size:10px;letter-spacing:1.1px;text-transform:uppercase;color:var(--muted);}
+.cost-field input{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;width:86px;padding:5px 9px;
+   border:1px solid var(--border);border-radius:5px;background:var(--bg);color:var(--text);text-align:right;}
+.cost-field input:focus{outline:none;border-color:var(--green);}
+.cost-delta{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;color:var(--green);}
+.btn-cost{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.8px;padding:7px 16px;
+   border-radius:5px;cursor:pointer;background:var(--green);border:none;color:#fff;}
+.btn-cost:disabled{opacity:.45;cursor:not-allowed;}
+/* ===== TABELA ===== */
+.tbl{width:100%;border-collapse:collapse;font-size:12px;}
+.tbl th{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:1px;text-transform:uppercase;
+        color:var(--muted);text-align:right;padding:9px 10px;border-bottom:1px solid var(--border);font-weight:600;}
+.tbl th:first-child{text-align:left;}
+.tbl td{padding:8px 10px;text-align:right;border-bottom:1px solid rgba(227,222,211,.55);
+        font-family:'Barlow Condensed',sans-serif;font-size:14px;}
+.tbl td:first-child{text-align:left;font-weight:700;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl tfoot td{border-top:2px solid var(--border);font-weight:900;color:var(--green);padding-top:10px;}
+.warn{background:rgba(247,127,0,.08);border:1px solid rgba(247,127,0,.3);border-radius:8px;
+      padding:12px 16px;font-size:12px;color:#7A4A00;margin-bottom:16px;line-height:1.55;}
 </style>
 </head>
 <body>
@@ -180,7 +227,7 @@ svg.trend-svg{width:100%;height:100%;overflow:visible;}
 <!-- TELA INICIAL -->
 <div id="upload-screen" style="display: none;">
   <div class="up-title">RETORNO × HIGIENIZAÇÃO</div>
-  <div class="up-sub">Caixas Plásticas OBA · CD Sumaré/SP<br>Retorno vem automático do GODMODE (a partir de Jul/26). Suba só a planilha de Higienização, ou visualize os dados já salvos.</div>
+  <div class="up-sub">Caixas Plásticas OBA · CD Sumaré/SP<br>Retorno vem do GODMODE e higienização vem do app de Higienização. Nada de planilha.</div>
   <div class="up-cards" style="grid-template-columns:1fr;width:340px;">
     <div class="up-card" id="card-hig">
       <input type="file" accept=".xlsx,.xls" id="file-hig">
@@ -217,9 +264,7 @@ svg.trend-svg{width:100%;height:100%;overflow:visible;}
     </div>
     <div class="sync-right">
       <span id="sync-ultima" style="font-size:11px;color:var(--muted);font-family:&#39;Barlow Condensed&#39;,sans-serif;"></span>
-      <button class="btn-atualizar" onclick="abrirModal()">↑ ATUALIZAR DADOS</button>
-      <button class="btn-salvar" id="btn-salvar" onclick="salvarFirebase()">💾 SALVAR NO SERVIDOR</button>
-      <button class="btn-atualizar" style="border-color:var(--red);color:var(--red);background:rgba(214,69,69,0.06);" onclick="abrirModalReset()">⚠ REESCREVER TUDO</button>
+      <button class="btn-atualizar" id="btn-refresh" onclick="recarregar()">↻ ATUALIZAR</button>
     </div>
   </div>
 
@@ -235,15 +280,33 @@ svg.trend-svg{width:100%;height:100%;overflow:visible;}
     <div class="filter-label">Período</div>
     <div class="month-btns" id="monthBtns"><button class="mbtn active" data-key="2025-01">Jan/25</button><button class="mbtn active" data-key="2025-07">Jul/25</button><button class="mbtn active" data-key="2025-08">Ago/25</button><button class="mbtn active" data-key="2025-09">Set/25</button><button class="mbtn active" data-key="2025-10">Out/25</button><button class="mbtn active" data-key="2025-11">Nov/25</button><button class="mbtn active" data-key="2025-12">Dez/25</button><button class="mbtn active" data-key="2026-01">Jan/26</button><button class="mbtn active" data-key="2026-02">Fev/26</button><button class="mbtn active" data-key="2026-03">Mar/26</button><button class="mbtn active" data-key="2026-04">Abr/26</button><button class="mbtn active" data-key="2026-05">Mai/26</button><button class="mbtn active" data-key="2026-06">Jun/26</button></div>
     <div class="filter-sep"></div>
+    <div class="range-box">
+      <label>De</label><input type="month" id="rgDe" onchange="aplicarRange()">
+      <label>Até</label><input type="month" id="rgAte" onchange="aplicarRange()">
+    </div>
+    <div class="filter-sep"></div>
     <div class="quick-btns">
       <button class="qbtn" onclick="selectAll()">Todos</button>
-      <button class="qbtn" onclick="select1T()">1º Trim</button>
-      <button class="qbtn" onclick="select2T()">2º Trim</button>
+      <button class="qbtn" onclick="selUltimos(3)">Últimos 3</button>
+      <button class="qbtn" onclick="selUltimos(6)">Últimos 6</button>
+      <button class="qbtn" onclick="selUltimos(12)">Últimos 12</button>
+      <button class="qbtn" onclick="selAno()">Ano atual</button>
+      <button class="qbtn" onclick="selTrim(1)">1º Tri</button>
+      <button class="qbtn" onclick="selTrim(2)">2º Tri</button>
+      <button class="qbtn" onclick="selTrim(3)">3º Tri</button>
+      <button class="qbtn" onclick="selTrim(4)">4º Tri</button>
       <button class="qbtn exp" onclick="exportarExcel()" title="Exporta os meses selecionados">⬇ Exportar Excel</button>
     </div>
     <div class="filter-result">Selecionado: <strong id="filterLabel">Jan/25 – Jun/26</strong></div>
   </div>
 
+  <div class="tabs">
+    <button class="tab active" data-pg="1" onclick="setPage(1,this)">Retorno × Higienização</button>
+    <button class="tab" data-pg="2" onclick="setPage(2,this)">Recebimento × Higienização × CEASA</button>
+    <button class="tab" data-pg="3" onclick="setPage(3,this)">Custos &amp; Economia</button>
+  </div>
+
+<div class="page active" id="pg1">
   <div class="kpi-strip">
     <div class="kpi green"><div class="kpi-label">Total Higienizado</div><div class="kpi-value" id="kpiHig">526.412</div><div class="kpi-sub">OBA + retorno CEASA</div><div class="kpi-badge badge-green" id="kpiHigBadge">período selecionado</div></div>
     <div class="kpi red"><div class="kpi-label">% Higienização</div><div class="kpi-value" id="kpiPct" style="color: var(--green);">36,9 %</div><div class="kpi-sub">do volume retornado</div><div class="kpi-badge badge-red">Meta não definida</div></div>
@@ -256,124 +319,7 @@ svg.trend-svg{width:100%;height:100%;overflow:visible;}
   <div class="mid-row">
     <div class="panel">
       <div class="panel-title"><span class="dot" style="background:var(--green)"></span>Volume Retornado vs. Higienizado — referências de capacidade</div>
-      <div class="bar-chart" id="barChart"><div class="bar-group">
-      <div class="bar-month-label">Jan/25</div>
-      <div class="bars-wrapper">
-        <div class="bar-row"><div class="bar-fill retorno" style="width:0.00%"></div><div class="bar-val">0</div></div>
-        <div class="bar-row"><div class="bar-fill higienizado" style="width:8.57%"></div><div class="bar-val highlight">37.267</div></div>
-        <div class="bar-row"><div class="bar-fill cap1turno" style="width:30.05%"></div><div class="bar-val" style="color:var(--yellow);font-size:10px;">130.639</div></div>
-        <div class="bar-row"><div class="bar-fill cap3turnos" style="width:98.04%"></div><div class="bar-val" style="color:var(--blue);font-size:10px;">426.173</div></div>
-      </div>
-      <div class="pct-col" style="color:var(--red)">0.0%</div>
-    </div><div class="bar-group">
-      <div class="bar-month-label">Jul/25</div>
-      <div class="bars-wrapper">
-        <div class="bar-row"><div class="bar-fill retorno" style="width:0.00%"></div><div class="bar-val">0</div></div>
-        <div class="bar-row"><div class="bar-fill higienizado" style="width:5.95%"></div><div class="bar-val highlight">25.874</div></div>
-        <div class="bar-row"><div class="bar-fill cap1turno" style="width:30.05%"></div><div class="bar-val" style="color:var(--yellow);font-size:10px;">130.639</div></div>
-        <div class="bar-row"><div class="bar-fill cap3turnos" style="width:98.04%"></div><div class="bar-val" style="color:var(--blue);font-size:10px;">426.173</div></div>
-      </div>
-      <div class="pct-col" style="color:var(--red)">0.0%</div>
-    </div><div class="bar-group">
-      <div class="bar-month-label">Ago/25</div>
-      <div class="bars-wrapper">
-        <div class="bar-row"><div class="bar-fill retorno" style="width:0.00%"></div><div class="bar-val">0</div></div>
-        <div class="bar-row"><div class="bar-fill higienizado" style="width:16.37%"></div><div class="bar-val highlight">71.178</div></div>
-        <div class="bar-row"><div class="bar-fill cap1turno" style="width:30.05%"></div><div class="bar-val" style="color:var(--yellow);font-size:10px;">130.639</div></div>
-        <div class="bar-row"><div class="bar-fill cap3turnos" style="width:98.04%"></div><div class="bar-val" style="color:var(--blue);font-size:10px;">426.173</div></div>
-      </div>
-      <div class="pct-col" style="color:var(--red)">0.0%</div>
-    </div><div class="bar-group">
-      <div class="bar-month-label">Set/25</div>
-      <div class="bars-wrapper">
-        <div class="bar-row"><div class="bar-fill retorno" style="width:0.00%"></div><div class="bar-val">0</div></div>
-        <div class="bar-row"><div class="bar-fill higienizado" style="width:13.39%"></div><div class="bar-val highlight">58.219</div></div>
-        <div class="bar-row"><div class="bar-fill cap1turno" style="width:30.05%"></div><div class="bar-val" style="color:var(--yellow);font-size:10px;">130.639</div></div>
-        <div class="bar-row"><div class="bar-fill cap3turnos" style="width:98.04%"></div><div class="bar-val" style="color:var(--blue);font-size:10px;">426.173</div></div>
-      </div>
-      <div class="pct-col" style="color:var(--red)">0.0%</div>
-    </div><div class="bar-group">
-      <div class="bar-month-label">Out/25</div>
-      <div class="bars-wrapper">
-        <div class="bar-row"><div class="bar-fill retorno" style="width:0.00%"></div><div class="bar-val">0</div></div>
-        <div class="bar-row"><div class="bar-fill higienizado" style="width:14.07%"></div><div class="bar-val highlight">61.141</div></div>
-        <div class="bar-row"><div class="bar-fill cap1turno" style="width:30.05%"></div><div class="bar-val" style="color:var(--yellow);font-size:10px;">130.639</div></div>
-        <div class="bar-row"><div class="bar-fill cap3turnos" style="width:98.04%"></div><div class="bar-val" style="color:var(--blue);font-size:10px;">426.173</div></div>
-      </div>
-      <div class="pct-col" style="color:var(--red)">0.0%</div>
-    </div><div class="bar-group">
-      <div class="bar-month-label">Nov/25</div>
-      <div class="bars-wrapper">
-        <div class="bar-row"><div class="bar-fill retorno" style="width:0.00%"></div><div class="bar-val">0</div></div>
-        <div class="bar-row"><div class="bar-fill higienizado" style="width:12.37%"></div><div class="bar-val highlight">53.784</div></div>
-        <div class="bar-row"><div class="bar-fill cap1turno" style="width:30.05%"></div><div class="bar-val" style="color:var(--yellow);font-size:10px;">130.639</div></div>
-        <div class="bar-row"><div class="bar-fill cap3turnos" style="width:98.04%"></div><div class="bar-val" style="color:var(--blue);font-size:10px;">426.173</div></div>
-      </div>
-      <div class="pct-col" style="color:var(--red)">0.0%</div>
-    </div><div class="bar-group">
-      <div class="bar-month-label">Dez/25</div>
-      <div class="bars-wrapper">
-        <div class="bar-row"><div class="bar-fill retorno" style="width:0.00%"></div><div class="bar-val">0</div></div>
-        <div class="bar-row"><div class="bar-fill higienizado" style="width:6.60%"></div><div class="bar-val highlight">28.695</div></div>
-        <div class="bar-row"><div class="bar-fill cap1turno" style="width:30.05%"></div><div class="bar-val" style="color:var(--yellow);font-size:10px;">130.639</div></div>
-        <div class="bar-row"><div class="bar-fill cap3turnos" style="width:98.04%"></div><div class="bar-val" style="color:var(--blue);font-size:10px;">426.173</div></div>
-      </div>
-      <div class="pct-col" style="color:var(--red)">0.0%</div>
-    </div><div class="bar-group">
-      <div class="bar-month-label">Jan/26</div>
-      <div class="bars-wrapper">
-        <div class="bar-row"><div class="bar-fill retorno" style="width:67.24%"></div><div class="bar-val">292.295</div></div>
-        <div class="bar-row"><div class="bar-fill higienizado" style="width:6.92%"></div><div class="bar-val highlight">30.074</div></div>
-        <div class="bar-row"><div class="bar-fill cap1turno" style="width:30.05%"></div><div class="bar-val" style="color:var(--yellow);font-size:10px;">130.639</div></div>
-        <div class="bar-row"><div class="bar-fill cap3turnos" style="width:98.04%"></div><div class="bar-val" style="color:var(--blue);font-size:10px;">426.173</div></div>
-      </div>
-      <div class="pct-col" style="color:var(--yellow)">10.3%</div>
-    </div><div class="bar-group">
-      <div class="bar-month-label">Fev/26</div>
-      <div class="bars-wrapper">
-        <div class="bar-row"><div class="bar-fill retorno" style="width:61.84%"></div><div class="bar-val">268.829</div></div>
-        <div class="bar-row"><div class="bar-fill higienizado" style="width:2.55%"></div><div class="bar-val highlight">11.103</div></div>
-        <div class="bar-row"><div class="bar-fill cap1turno" style="width:30.05%"></div><div class="bar-val" style="color:var(--yellow);font-size:10px;">130.639</div></div>
-        <div class="bar-row"><div class="bar-fill cap3turnos" style="width:98.04%"></div><div class="bar-val" style="color:var(--blue);font-size:10px;">426.173</div></div>
-      </div>
-      <div class="pct-col" style="color:var(--red)">4.1%</div>
-    </div><div class="bar-group">
-      <div class="bar-month-label">Mar/26</div>
-      <div class="bars-wrapper">
-        <div class="bar-row"><div class="bar-fill retorno" style="width:65.88%"></div><div class="bar-val">286.389</div></div>
-        <div class="bar-row"><div class="bar-fill higienizado" style="width:4.35%"></div><div class="bar-val highlight">18.890</div></div>
-        <div class="bar-row"><div class="bar-fill cap1turno" style="width:30.05%"></div><div class="bar-val" style="color:var(--yellow);font-size:10px;">130.639</div></div>
-        <div class="bar-row"><div class="bar-fill cap3turnos" style="width:98.04%"></div><div class="bar-val" style="color:var(--blue);font-size:10px;">426.173</div></div>
-      </div>
-      <div class="pct-col" style="color:var(--red)">6.6%</div>
-    </div><div class="bar-group">
-      <div class="bar-month-label">Abr/26</div>
-      <div class="bars-wrapper">
-        <div class="bar-row"><div class="bar-fill retorno" style="width:66.12%"></div><div class="bar-val">287.429</div></div>
-        <div class="bar-row"><div class="bar-fill higienizado" style="width:12.31%"></div><div class="bar-val highlight">53.513</div></div>
-        <div class="bar-row"><div class="bar-fill cap1turno" style="width:30.05%"></div><div class="bar-val" style="color:var(--yellow);font-size:10px;">130.639</div></div>
-        <div class="bar-row"><div class="bar-fill cap3turnos" style="width:98.04%"></div><div class="bar-val" style="color:var(--blue);font-size:10px;">426.173</div></div>
-      </div>
-      <div class="pct-col" style="color:var(--yellow)">18.6%</div>
-    </div><div class="bar-group">
-      <div class="bar-month-label">Mai/26</div>
-      <div class="bars-wrapper">
-        <div class="bar-row"><div class="bar-fill retorno" style="width:54.33%"></div><div class="bar-val">236.164</div></div>
-        <div class="bar-row"><div class="bar-fill higienizado" style="width:16.19%"></div><div class="bar-val highlight">70.384</div></div>
-        <div class="bar-row"><div class="bar-fill cap1turno" style="width:30.05%"></div><div class="bar-val" style="color:var(--yellow);font-size:10px;">130.639</div></div>
-        <div class="bar-row"><div class="bar-fill cap3turnos" style="width:98.04%"></div><div class="bar-val" style="color:var(--blue);font-size:10px;">426.173</div></div>
-      </div>
-      <div class="pct-col" style="color:var(--green)">29.8%</div>
-    </div><div class="bar-group">
-      <div class="bar-month-label">Jun/26</div>
-      <div class="bars-wrapper">
-        <div class="bar-row"><div class="bar-fill retorno" style="width:12.67%"></div><div class="bar-val">55.074</div></div>
-        <div class="bar-row"><div class="bar-fill higienizado" style="width:1.45%"></div><div class="bar-val highlight">6.290</div></div>
-        <div class="bar-row"><div class="bar-fill cap1turno" style="width:30.05%"></div><div class="bar-val" style="color:var(--yellow);font-size:10px;">130.639</div></div>
-        <div class="bar-row"><div class="bar-fill cap3turnos" style="width:98.04%"></div><div class="bar-val" style="color:var(--blue);font-size:10px;">426.173</div></div>
-      </div>
-      <div class="pct-col" style="color:var(--yellow)">11.4%</div>
-    </div></div>
+      <div class="bar-chart" id="barChart"></div></div>
       <div class="legend">
         <div class="legend-item"><div class="legend-swatch ret"></div> Retorno lojas</div>
         <div class="legend-item"><div class="legend-swatch hig"></div> Higienizado total</div>
@@ -412,16 +358,13 @@ svg.trend-svg{width:100%;height:100%;overflow:visible;}
   <div class="bot-row">
     <div class="insight-card">
       <div class="insight-title">Tendência — % Higienização por Mês</div>
-      <div class="trend-line-wrap"><svg class="trend-svg" id="trendSvg" viewBox="0 0 280 70" preserveAspectRatio="none"><path d="M14,56 L14,56 L35,56 L56,56 L77,56 L98,56 L119,56 L140,56 L161,41.500305540330444 L182,50.179594196774225 L203,46.70467312230982 L224,29.762783644466936 L245,14 L266,39.90492269373287 L266,56 Z" fill="rgba(45,80,22,0.10)"></path><path d="M14,56 L35,56 L56,56 L77,56 L98,56 L119,56 L140,56 L161,41.500305540330444 L182,50.179594196774225 L203,46.70467312230982 L224,29.762783644466936 L245,14 L266,39.90492269373287" stroke="#2D5016" stroke-width="2" fill="none"></path><circle cx="14" cy="56" r="4" fill="#D64545"></circle><text x="14" y="48" text-anchor="middle" font-size="9" fill="#6E7A5E" font-family="Barlow Condensed,sans-serif">0.0%</text><text x="14" y="70" text-anchor="middle" font-size="9" fill="#8A9179" font-family="Barlow Condensed,sans-serif">Jan/25</text><circle cx="35" cy="56" r="4" fill="#D64545"></circle><text x="35" y="48" text-anchor="middle" font-size="9" fill="#6E7A5E" font-family="Barlow Condensed,sans-serif">0.0%</text><text x="35" y="70" text-anchor="middle" font-size="9" fill="#8A9179" font-family="Barlow Condensed,sans-serif">Jul/25</text><circle cx="56" cy="56" r="4" fill="#D64545"></circle><text x="56" y="48" text-anchor="middle" font-size="9" fill="#6E7A5E" font-family="Barlow Condensed,sans-serif">0.0%</text><text x="56" y="70" text-anchor="middle" font-size="9" fill="#8A9179" font-family="Barlow Condensed,sans-serif">Ago/25</text><circle cx="77" cy="56" r="4" fill="#D64545"></circle><text x="77" y="48" text-anchor="middle" font-size="9" fill="#6E7A5E" font-family="Barlow Condensed,sans-serif">0.0%</text><text x="77" y="70" text-anchor="middle" font-size="9" fill="#8A9179" font-family="Barlow Condensed,sans-serif">Set/25</text><circle cx="98" cy="56" r="4" fill="#D64545"></circle><text x="98" y="48" text-anchor="middle" font-size="9" fill="#6E7A5E" font-family="Barlow Condensed,sans-serif">0.0%</text><text x="98" y="70" text-anchor="middle" font-size="9" fill="#8A9179" font-family="Barlow Condensed,sans-serif">Out/25</text><circle cx="119" cy="56" r="4" fill="#D64545"></circle><text x="119" y="48" text-anchor="middle" font-size="9" fill="#6E7A5E" font-family="Barlow Condensed,sans-serif">0.0%</text><text x="119" y="70" text-anchor="middle" font-size="9" fill="#8A9179" font-family="Barlow Condensed,sans-serif">Nov/25</text><circle cx="140" cy="56" r="4" fill="#D64545"></circle><text x="140" y="48" text-anchor="middle" font-size="9" fill="#6E7A5E" font-family="Barlow Condensed,sans-serif">0.0%</text><text x="140" y="70" text-anchor="middle" font-size="9" fill="#8A9179" font-family="Barlow Condensed,sans-serif">Dez/25</text><circle cx="161" cy="41.500305540330444" r="4" fill="#F77F00"></circle><text x="161" y="33.500305540330444" text-anchor="middle" font-size="9" fill="#6E7A5E" font-family="Barlow Condensed,sans-serif">10.3%</text><text x="161" y="70" text-anchor="middle" font-size="9" fill="#8A9179" font-family="Barlow Condensed,sans-serif">Jan/26</text><circle cx="182" cy="50.179594196774225" r="4" fill="#D64545"></circle><text x="182" y="42.179594196774225" text-anchor="middle" font-size="9" fill="#6E7A5E" font-family="Barlow Condensed,sans-serif">4.1%</text><text x="182" y="70" text-anchor="middle" font-size="9" fill="#8A9179" font-family="Barlow Condensed,sans-serif">Fev/26</text><circle cx="203" cy="46.70467312230982" r="4" fill="#D64545"></circle><text x="203" y="38.70467312230982" text-anchor="middle" font-size="9" fill="#6E7A5E" font-family="Barlow Condensed,sans-serif">6.6%</text><text x="203" y="70" text-anchor="middle" font-size="9" fill="#8A9179" font-family="Barlow Condensed,sans-serif">Mar/26</text><circle cx="224" cy="29.762783644466936" r="4" fill="#F77F00"></circle><text x="224" y="21.762783644466936" text-anchor="middle" font-size="9" fill="#6E7A5E" font-family="Barlow Condensed,sans-serif">18.6%</text><text x="224" y="70" text-anchor="middle" font-size="9" fill="#8A9179" font-family="Barlow Condensed,sans-serif">Abr/26</text><circle cx="245" cy="14" r="4" fill="#2D5016"></circle><text x="245" y="6" text-anchor="middle" font-size="9" fill="#6E7A5E" font-family="Barlow Condensed,sans-serif">29.8%</text><text x="245" y="70" text-anchor="middle" font-size="9" fill="#8A9179" font-family="Barlow Condensed,sans-serif">Mai/26</text><circle cx="266" cy="39.90492269373287" r="4" fill="#F77F00"></circle><text x="266" y="31.90492269373287" text-anchor="middle" font-size="9" fill="#6E7A5E" font-family="Barlow Condensed,sans-serif">11.4%</text><text x="266" y="70" text-anchor="middle" font-size="9" fill="#8A9179" font-family="Barlow Condensed,sans-serif">Jun/26</text></svg></div>
+      <div class="trend-line-wrap"><svg class="trend-svg" id="trendSvg" viewBox="0 0 280 70" preserveAspectRatio="none"></svg></div>
       <div style="display:flex;justify-content:space-between;margin-top:10px;" id="trendStats">
-    <div style="text-align:center"><div style="font-family:&#39;Barlow Condensed&#39;,sans-serif;font-size:20px;font-weight:700;color:var(--red)">0,0%</div><div style="font-size:9px;color:var(--muted)">PIOR (Jan/25)</div></div>
-    <div style="text-align:center"><div style="font-family:&#39;Barlow Condensed&#39;,sans-serif;font-size:20px;font-weight:700;color:var(--green)">29,8%</div><div style="font-size:9px;color:var(--muted)">MELHOR (Mai/26)</div></div>
-    <div style="text-align:center"><div style="font-family:&#39;Barlow Condensed&#39;,sans-serif;font-size:20px;font-weight:700;color:var(--blue)">+Infinity%</div><div style="font-size:9px;color:var(--muted)">EVOLUÇÃO</div></div></div>
     </div>
     <div class="insight-card">
       <div class="insight-title">Capacidade da Máquina vs. Uso Real</div>
       <div class="gauge-wrap">
-        <svg class="gauge-svg" viewBox="0 0 160 90" id="gaugeSvg"><path d="M 20 80 A 60 60 0 0 1 140 80" stroke="#E3DED3" stroke-width="14" fill="none"></path><path d="M 20 80 A 60 60 0 0 1 45.737556874560546 30.74469580769979" stroke="rgba(247,127,0,0.35)" stroke-width="14" fill="none" stroke-linecap="round"></path><path d="M 20 80 A 60 60 0 0 1 22.65330299771754 62.35470762700693" stroke="#2D5016" stroke-width="14" fill="none" stroke-linecap="round"></path><text x="80" y="70" text-anchor="middle" font-size="18" font-family="Barlow Condensed,sans-serif" font-weight="700" fill="#2D5016">9,5 %</text><text x="80" y="86" text-anchor="middle" font-size="9" font-family="Barlow,sans-serif" fill="#8A9179">uso médio/mês</text></svg>
+        <svg class="gauge-svg" viewBox="0 0 160 90" id="gaugeSvg"></svg>
         <div class="gauge-labels">
           <div class="gauge-label-item"><div class="gauge-label-val" style="color:var(--green)" id="gaugeHigVal">40.493</div><div class="gauge-label-sub" id="gaugeHigLabel">média/mês Jan/25–Jun/26</div></div>
           <div class="gauge-label-item"><div class="gauge-label-val" style="color:var(--blue)">426.173</div><div class="gauge-label-sub">cap. máx. 3 turnos</div></div>
@@ -437,7 +380,60 @@ svg.trend-svg{width:100%;height:100%;overflow:visible;}
       <div class="insight-item"><span class="insight-icon">🟢</span><span><strong style="color:var(--green)">Mai = melhor mês.</strong> 30,4% — mas nem 1 turno completo aproveitado (70k de 130k possíveis).</span></div>
     </div>
   </div>
-</div>
+</div><!-- /pg1 -->
+
+<!-- ═══════════ PÁGINA 2 ═══════════ -->
+<div class="page" id="pg2">
+  <div class="kpi-strip k5">
+    <div class="kpi blue"><div class="kpi-label">Total Recebimento</div><div class="kpi-value" id="p2Rec">—</div><div class="kpi-sub">retorno de lojas (GODMODE)</div><div class="kpi-badge badge-blue" id="p2RecBadge">—</div></div>
+    <div class="kpi green"><div class="kpi-label">Total Higienização</div><div class="kpi-value" id="p2Hig">—</div><div class="kpi-sub">Oba + retornado do CEASA</div><div class="kpi-badge badge-green" id="p2HigBadge">—</div></div>
+    <div class="kpi green"><div class="kpi-label">% Higienização</div><div class="kpi-value" id="p2Pct">—</div><div class="kpi-sub">sobre o recebimento</div><div class="kpi-badge badge-green" id="p2PctBadge">—</div></div>
+    <div class="kpi red"><div class="kpi-label">Diferença %</div><div class="kpi-value" id="p2Dif">—</div><div class="kpi-sub">recebido sem higienizar</div><div class="kpi-badge badge-red" id="p2DifBadge">—</div></div>
+    <div class="kpi cyan"><div class="kpi-label">Saldo em trânsito</div><div class="kpi-value" id="p2Sal">—</div><div class="kpi-sub">expedido − retornado CEASA</div><div class="kpi-badge badge-cyan" id="p2SalBadge">—</div></div>
+  </div>
+  <div class="warn" id="p2Warn" style="display:none"></div>
+  <div class="panel" style="margin-bottom:20px;">
+    <div class="panel-title"><span class="dot" style="background:var(--blue)"></span>Recebimento × Higienização × CEASA — por mês</div>
+    <div class="col-chart"><svg class="col-svg" id="p2Svg" preserveAspectRatio="xMinYMid meet"></svg></div>
+    <div class="legend">
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--blue)"></span>Recebimento (retorno de lojas)</div>
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--green)"></span>Higienização Oba</div>
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--yellow)"></span>CEASA expedido</div>
+      <div class="legend-item"><span class="legend-swatch" style="background:var(--cyan)"></span>CEASA retornado</div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-title"><span class="dot" style="background:var(--green)"></span>Detalhe mensal</div>
+    <table class="tbl" id="p2Tbl"></table>
+  </div>
+</div><!-- /pg2 -->
+
+<!-- ═══════════ PÁGINA 3 ═══════════ -->
+<div class="page" id="pg3">
+  <div class="cost-bar">
+    <div class="cost-field"><label>Custo Oba / caixa</label><input type="number" step="0.01" min="0" id="inCustoOba" value="0.30"></div>
+    <div class="cost-field"><label>Custo CEASA / caixa</label><input type="number" step="0.01" min="0" id="inCustoCeasa" value="1.50"></div>
+    <div class="cost-field"><label>Economia / caixa</label><span class="cost-delta" id="deltaCusto">R$ 1,20</span></div>
+    <button class="btn-cost" id="btnCusto" onclick="salvarCustos()">SALVAR CUSTOS</button>
+    <span style="font-size:11px;color:var(--muted);">Vale para todo o período selecionado. O CEASA cobra pelo volume <strong>retornado</strong>.</span>
+  </div>
+  <div class="kpi-strip k5">
+    <div class="kpi green"><div class="kpi-label">Economia total</div><div class="kpi-value" id="p3Eco">—</div><div class="kpi-sub">por higienizar dentro do CD</div><div class="kpi-badge badge-green" id="p3EcoBadge">—</div></div>
+    <div class="kpi green"><div class="kpi-label">Custo Oba</div><div class="kpi-value" id="p3CustoOba">—</div><div class="kpi-sub">volume interno × custo Oba</div><div class="kpi-badge badge-green" id="p3ObaBadge">—</div></div>
+    <div class="kpi yellow"><div class="kpi-label">Custo CEASA</div><div class="kpi-value" id="p3CustoCeasa">—</div><div class="kpi-sub">retornado × custo CEASA</div><div class="kpi-badge badge-yellow" id="p3CeasaBadge">—</div></div>
+    <div class="kpi blue"><div class="kpi-label">Custo total</div><div class="kpi-value" id="p3CustoTot">—</div><div class="kpi-sub">Oba + CEASA</div><div class="kpi-badge badge-blue" id="p3TotBadge">—</div></div>
+    <div class="kpi red"><div class="kpi-label">Custo se tudo no CEASA</div><div class="kpi-value" id="p3Hipo">—</div><div class="kpi-sub">cenário sem máquina própria</div><div class="kpi-badge badge-red">comparativo</div></div>
+  </div>
+  <div class="panel" style="margin-bottom:20px;">
+    <div class="panel-title"><span class="dot" style="background:var(--green)"></span>Economia mensal — valores em R$</div>
+    <div class="col-chart"><svg class="col-svg" id="p3Svg" style="height:320px" preserveAspectRatio="xMinYMid meet"></svg></div>
+  </div>
+  <div class="panel">
+    <div class="panel-title"><span class="dot" style="background:var(--yellow)"></span>Memória de cálculo</div>
+    <table class="tbl" id="p3Tbl"></table>
+  </div>
+</div><!-- /pg3 -->
+</div><!-- /dashboard -->
 
 <!-- MODAL ATUALIZAR -->
 <div id="modal-overlay">
@@ -514,6 +510,20 @@ svg.trend-svg{width:100%;height:100%;overflow:visible;}
 // ═══════════ FIREBASE CONFIG ═══════════
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import { getDatabase, ref, set, get, child } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
+import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+
+// GODMODE e o app de Higienização exigem usuário autenticado nas regras do RTDB.
+// Sem este login anônimo a leitura volta "Permission denied".
+const logins = new Map();
+async function autenticar(fbApp, nome){
+  if(logins.has(nome)) return logins.get(nome);
+  const pr = signInAnonymously(getAuth(fbApp)).catch(e=>{
+    console.error('Login anônimo falhou em '+nome+':', e);
+    throw new Error('login anônimo bloqueado em '+nome);
+  });
+  logins.set(nome, pr);
+  return pr;
+}
 
 const firebaseConfig = {
   apiKey: "AIzaSyAibi3uGOKwuWH7jlDx8vbpbQIGVTCHjgM",
@@ -528,7 +538,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 // ═══════════ GODMODE (retorno ao vivo) ═══════════
-const GOD_CUTOFF = '2026-07-01'; // antes: histórico das planilhas; a partir daqui: GODMODE
+const GOD_CUTOFF = '2026-06-01'; // antes: histórico das planilhas; a partir daqui: GODMODE
 const MES_INICIO = '2026-01'; // meses anteriores ficam salvos no Firebase, mas fora do dashboard
 const godConfig = {
   apiKey: "AIzaSyDCBvqc4xbsQcH5VQafqlmnuegX-yVZqJk",
@@ -542,6 +552,66 @@ const godConfig = {
 const godApp = initializeApp(godConfig, 'godmode');
 const godDb  = getDatabase(godApp);
 
+// ═══════════ APP DE HIGIENIZAÇÃO (higienizacao-2e25e) ═══════════
+// Substitui a planilha Higienização_de_Caixas_Oba.xlsx.
+// Só os meses que existem no app sobrescrevem o histórico; os demais ficam intactos.
+const higConfig = {
+  apiKey: "AIzaSyBKDHs_HjqGm0y1lreMLI5yw9YheOKyFkw",
+  authDomain: "higienizacao-2e25e.firebaseapp.com",
+  databaseURL: "https://higienizacao-2e25e-default-rtdb.firebaseio.com",
+  projectId: "higienizacao-2e25e",
+  storageBucket: "higienizacao-2e25e.firebasestorage.app",
+  messagingSenderId: "682389107454",
+  appId: "1:682389107454:web:22efa41875b39981902baf"
+};
+const higApp = initializeApp(higConfig, 'higapp');
+const higDb  = getDatabase(higApp);
+const HIG_ROOT = 'hig_app';
+
+function somaItens(it){ return Object.values(it||{}).reduce((s,v)=>s+(Number(v)||0),0); }
+
+// achata {mes:{id:reg}} e soma por dia no bucket informado
+function acumular(snapVal, bucket, destino){
+  if(!snapVal) return;
+  Object.values(snapVal).forEach(mes=>{
+    if(!mes || typeof mes!=='object') return;
+    Object.values(mes).forEach(reg=>{
+      if(!reg || !reg.data) return;
+      const ds=String(reg.data).slice(0,10); if(!ds) return;
+      const q=somaItens(reg.itens) || Number(reg.volumeTotal) || 0;
+      if(q<=0) return;
+      const m=ds.slice(0,7);
+      if(!destino[m]) destino[m]={oba:0,ceasa_exp:0,ceasa_rec:0,dias:{}};
+      if(!destino[m].dias[ds]) destino[m].dias[ds]={oba:0,ceasa_exp:0,ceasa_rec:0};
+      destino[m].dias[ds][bucket]+=q;
+    });
+  });
+}
+
+async function carregarHigApp(){
+  await autenticar(higApp, 'Higienização');
+  const out={};
+  const [pr,en,rc]=await Promise.all([
+    get(ref(higDb, HIG_ROOT+'/protocolos')),
+    get(ref(higDb, HIG_ROOT+'/envios')),
+    get(ref(higDb, HIG_ROOT+'/recebimentos'))
+  ]);
+  acumular(pr.exists()?pr.val():null, 'oba',       out);
+  acumular(en.exists()?en.val():null, 'ceasa_exp', out);
+  acumular(rc.exists()?rc.val():null, 'ceasa_rec', out);
+  Object.values(out).forEach(m=>{
+    m.oba=0; m.ceasa_exp=0; m.ceasa_rec=0;
+    Object.values(m.dias).forEach(d=>{ m.oba+=d.oba; m.ceasa_exp+=d.ceasa_exp; m.ceasa_rec+=d.ceasa_rec; });
+  });
+  return out;
+}
+
+// sobrescreve APENAS os meses presentes no app (não zera mês nenhum)
+function aplicarHigApp(app){
+  Object.entries(app).forEach(([m,reg])=>{ fbHig[m]=reg; });
+  return Object.keys(app).sort();
+}
+
 // mesmo critério da planilha: só caixas plásticas G/M/P e Caradori,
 // tolerante às duas gerações de nome do GODMODE (com/sem acento, sufixos)
 function matEhCaixa(mat){
@@ -552,6 +622,7 @@ function matEhCaixa(mat){
 
 // lê retorno_app/retorno_materiais e agrega qtd_fisica por dia (>= cutoff)
 async function carregarGodmode(){
+  await autenticar(godApp, 'GODMODE');
   const snap = await get(ref(godDb, 'retorno_app/retorno_materiais'));
   const god = {};
   if (!snap.exists()) return god;
@@ -591,6 +662,10 @@ const db  = getDatabase(app);
 // ═══════════ CONSTANTES ═══════════
 const MODELOS = ['CAIXA PLASTICA MODELO G','CAIXA PLASTICA MODELO M','CAIXA PLASTICA MODELO P','CARADORI'];
 const cap1 = 130639, cap3 = 426173;
+let CUSTO_OBA = 0.30, CUSTO_CEASA = 1.50;
+const fmtK    = n => Math.round(n).toLocaleString('pt-BR');
+const fmtBRLk = n => Math.round(n).toLocaleString('pt-BR');
+const fmtBRL = n => 'R$ ' + (Math.round(n*100)/100).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const NOMES_MES = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 const DIAS_OPERACAO = 26; // dias de higienização considerados no mês
 
@@ -830,7 +905,7 @@ window.entrarComUpload = async function() {
     const god = await carregarGodmode();
     aplicarGodmode(god);
     const nDias = Object.values(god).reduce((s,g)=>s+Object.keys(g.dias).length,0);
-    godMsg = ` · Retorno GODMODE ao vivo (${nDias} dias desde Jul/26)`;
+    godMsg = ` · Retorno GODMODE ao vivo (${nDias} dias desde Jun/26)`;
   } catch(e) {
     console.error('GODMODE indisponível:', e);
     godMsg = ' · ⚠ GODMODE: ' + (e && e.message ? e.message : 'falha de leitura');
@@ -864,11 +939,15 @@ let fbRet = {}; // {mes: {retorno}}
 
 async function carregarFirebase() {
   try {
+    try { await autenticar(app, 'Dashboard'); } catch(e) { console.warn('Dashboard segue sem login:', e.message); }
     const snap = await get(ref(db, 'higienizacao'));
     if (snap.exists()) {
       const val = snap.val();
       fbHig = val.hig || {};
       fbRet = val.ret || {};
+      if (val.custos) { CUSTO_OBA = Number(val.custos.oba)||CUSTO_OBA; CUSTO_CEASA = Number(val.custos.ceasa)||CUSTO_CEASA; }
+      const iO=document.getElementById('inCustoOba'), iC=document.getElementById('inCustoCeasa');
+      if(iO) iO.value=CUSTO_OBA.toFixed(2); if(iC) iC.value=CUSTO_CEASA.toFixed(2);
     } else {
       fbHig = {}; fbRet = {};
     }
@@ -877,10 +956,20 @@ async function carregarFirebase() {
       const god = await carregarGodmode();
       aplicarGodmode(god);
       const nDias = Object.values(god).reduce((s,g)=>s+Object.keys(g.dias).length,0);
-      godStatus = ` · Retorno GODMODE ao vivo (${nDias} dias desde Jul/26)`;
+      godStatus = ` · Retorno GODMODE ao vivo (${nDias} dias desde Jun/26)`;
     } catch(e) {
       console.error('GODMODE indisponível:', e);
       godStatus = ' · ⚠ GODMODE: ' + (e && e.message ? e.message : 'falha de leitura');
+    }
+    try {
+      const hApp = await carregarHigApp();
+      const ms = aplicarHigApp(hApp);
+      godStatus += ms.length
+        ? ` · Higienização ao vivo do app (${fmtMes(ms[0])}–${fmtMes(ms[ms.length-1])})`
+        : ' · ⚠ App de higienização sem registros';
+    } catch(e) {
+      console.error('App de higienização indisponível:', e);
+      godStatus += ' · ⚠ Higienização: ' + (e && e.message ? e.message : 'falha de leitura');
     }
     const meses = [...Object.keys(fbHig), ...Object.keys(fbRet)];
     const ultima = meses.sort().pop() || '';
@@ -1104,6 +1193,9 @@ function buildTODOS() {
   const totRet = TODOS.reduce((s,d)=>s+d.retorno,0);
   document.getElementById('hdr-total').textContent = fmtM(totRet);
   selected = new Set(TODOS.map(d=>d.key));
+  const de=document.getElementById('rgDe'), ate=document.getElementById('rgAte');
+  if(de && TODOS.length){ de.min=TODOS[0].key; de.max=TODOS[TODOS.length-1].key; de.value=TODOS[0].key; }
+  if(ate && TODOS.length){ ate.min=TODOS[0].key; ate.max=TODOS[TODOS.length-1].key; ate.value=TODOS[TODOS.length-1].key; }
   const bc = document.getElementById('monthBtns'); bc.innerHTML='';
   TODOS.forEach(d=>{
     const b=document.createElement('button');
@@ -1116,24 +1208,62 @@ function buildTODOS() {
 window.toggleMonth = function(key,btn) {
   if(selected.has(key)){ if(selected.size===1)return; selected.delete(key); btn.classList.remove('active'); }
   else { selected.add(key); btn.classList.add('active'); }
+  sincronizarRange();
   renderDashboard();
 };
-window.selectAll = function() {
-  selected=new Set(TODOS.map(d=>d.key));
-  document.querySelectorAll('.mbtn').forEach(b=>b.classList.add('active')); renderDashboard();
+// ---------- seleção de período ----------
+function aplicarSelecao(keys){
+  const ks = keys.filter(k => TODOS.some(d=>d.key===k));
+  if(!ks.length) return false;
+  selected = new Set(ks);
+  document.querySelectorAll('.mbtn').forEach(b=>b.classList.toggle('active', selected.has(b.dataset.key)));
+  sincronizarRange();
+  renderDashboard();
+  return true;
+}
+function sincronizarRange(){
+  const ks=[...selected].sort();
+  const de=document.getElementById('rgDe'), ate=document.getElementById('rgAte');
+  if(de && ks.length) de.value=ks[0];
+  if(ate && ks.length) ate.value=ks[ks.length-1];
+}
+function anoBase(){
+  // último ano com dados — evita "1º Tri" cair num ano que não existe
+  return TODOS.length ? TODOS[TODOS.length-1].key.slice(0,4) : String(new Date().getFullYear());
+}
+window.selectAll = function(){ aplicarSelecao(TODOS.map(d=>d.key)); };
+
+window.aplicarRange = function(){
+  const de=document.getElementById('rgDe').value, ate=document.getElementById('rgAte').value;
+  if(!de || !ate) return;
+  const ini = de<=ate ? de : ate, fim = de<=ate ? ate : de;
+  const ks=TODOS.filter(d=>d.key>=ini && d.key<=fim).map(d=>d.key);
+  if(!ks.length){ alert('Nenhum mês com dados nesse intervalo.'); sincronizarRange(); return; }
+  aplicarSelecao(ks);
 };
-window.select1T = function() {
-  const ks=TODOS.filter(d=>parseInt(d.key.slice(5,7))<=3).map(d=>d.key);
-  selected=new Set(ks); document.querySelectorAll('.mbtn').forEach(b=>b.classList.toggle('active',selected.has(b.dataset.key))); renderDashboard();
+
+window.selUltimos = function(n){
+  aplicarSelecao(TODOS.slice(-n).map(d=>d.key));
 };
-window.select2T = function() {
-  const ks=TODOS.filter(d=>{const m=parseInt(d.key.slice(5,7));return m>=4&&m<=6;}).map(d=>d.key);
-  selected=new Set(ks.length?ks:TODOS.map(d=>d.key)); document.querySelectorAll('.mbtn').forEach(b=>b.classList.toggle('active',selected.has(b.dataset.key))); renderDashboard();
+
+window.selAno = function(){
+  const a=anoBase();
+  aplicarSelecao(TODOS.filter(d=>d.key.startsWith(a)).map(d=>d.key));
+};
+
+window.selTrim = function(t){
+  const a=anoBase(), ini=(t-1)*3+1, fim=t*3;
+  const ks=TODOS.filter(d=>{
+    if(d.key.slice(0,4)!==a) return false;
+    const m=parseInt(d.key.slice(5,7),10);
+    return m>=ini && m<=fim;
+  }).map(d=>d.key);
+  if(!aplicarSelecao(ks)) alert(t+'º trimestre de '+a+' não tem dados.');
 };
 
 // ═══════════ HELPERS ═══════════
 function fmt(n){ return Math.round(n).toLocaleString('pt-BR'); }
-function fmtM(n){ return fmt(n); } // Oba: sempre número inteiro, sem abreviação
+function fmtM(n){ return fmt(n); }
 function fmtMes(m){ if(!m||m.length<7)return '—'; const[,mes]=m.split('-'); return NOMES_MES[parseInt(mes)-1]+'/'+m.slice(2,4); }
 function setSyncStatus(state,msg){
   const dot=document.getElementById('sync-dot');
@@ -1161,6 +1291,7 @@ function renderDashboard() {
   document.getElementById('kpiGapBadge').textContent=totRet?(totGap/totRet*100).toFixed(1).replace('.',',')+'% do fluxo':'—';
   document.getElementById('kpiCap').textContent=capUso.toFixed(1).replace('.',',')+' %';
   renderBars(data); renderCeasa(data); renderTrend(data); renderGauge(avgHig,capUso,data);
+  renderPag2(data); renderPag3(data);
   renderProjecao();
 }
 
@@ -1282,6 +1413,167 @@ function renderGauge(avgHig,capUso,data){
   document.getElementById('gaugeHigLabel').textContent='média/mês '+mLabel;
   document.getElementById('gaugeMsg').textContent=`${(100-capUso).toFixed(1).replace('.',',')}% da capacidade não utilizada`;
 }
+
+// ═══════════════════════════════════════════════════════════
+//  PÁGINAS 2 e 3 — Recebimento × CEASA e Custos
+// ═══════════════════════════════════════════════════════════
+window.setPage = function(n, btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('pg'+n).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+};
+
+function pct(a,b){ return b ? a/b*100 : 0; }
+function p1(n){ return n.toFixed(1).replace('.',',')+' %'; }
+
+// ---------- gráfico de colunas agrupadas ----------
+function colunas(svgId, data, series, height, fmtVal){
+  const svg=document.getElementById(svgId); if(!svg) return;
+  const n=data.length; if(!n){ svg.innerHTML=''; return; }
+  const H=height, mT=40, mB=52, mL=98;
+  const bw=34, gap=16;
+  const grupoW=series.length*(bw+gap)+44;
+  const W=mL+n*grupoW+34;
+  const plotH=H-mT-mB;
+  let max=0;
+  data.forEach(d=>series.forEach(s=>{ const v=s.val(d); if(v>max) max=v; }));
+  if(max<=0) max=1;
+  const topo=max*1.18;
+  const esc=v=>plotH*(v/topo);
+  const rot=fmtVal||fmtK;
+  let g='';
+  for(let i=0;i<=4;i++){
+    const y=mT+plotH-plotH*(i/4);
+    g+=`<line x1="${mL}" y1="${y}" x2="${W-14}" y2="${y}" stroke="#E3DED3" stroke-width="1"/>`;
+    g+=`<text x="${mL-10}" y="${y+4}" text-anchor="end" font-size="12" font-weight="700" fill="#8A9179" font-family="Barlow Condensed,sans-serif">${rot(topo*(i/4))}</text>`;
+  }
+  data.forEach((d,i)=>{
+    const x0=mL+i*grupoW+19;
+    series.forEach((sr,j)=>{
+      const v=sr.val(d), h=esc(v), x=x0+j*(bw+gap), y=mT+plotH-h;
+      g+=`<rect x="${x}" y="${y}" width="${bw}" height="${Math.max(h,0)}" fill="${sr.cor}" rx="2"><title>${sr.nome}: ${rot(v)}</title></rect>`;
+      // rótulo SEMPRE fora da barra, acima dela, na horizontal e em negrito
+      g+=`<text x="${x+bw/2}" y="${y-8}" text-anchor="middle" font-size="12" font-weight="700" fill="${sr.cor}" font-family="Barlow Condensed,sans-serif">${v>0?rot(v):'—'}</text>`;
+    });
+    const cx=x0+(series.length*(bw+gap)-gap)/2;
+    g+=`<text x="${cx}" y="${mT+plotH+22}" text-anchor="middle" font-size="13" font-weight="700" fill="#1F3A10" font-family="Barlow Condensed,sans-serif">${d.label}</text>`;
+  });
+  g+=`<line x1="${mL}" y1="${mT+plotH}" x2="${W-14}" y2="${mT+plotH}" stroke="#8A9179" stroke-width="1.4"/>`;
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  svg.style.minWidth=W+'px';
+  svg.innerHTML=g;
+}
+
+// ---------- PÁGINA 2 ----------
+function renderPag2(data){
+  const rec=data.reduce((s,d)=>s+d.retorno,0);
+  const oba=data.reduce((s,d)=>s+d.higOba,0);
+  const exp=data.reduce((s,d)=>s+d.ceasaExp,0);
+  const rc =data.reduce((s,d)=>s+d.ceasaRec,0);
+  const hig=oba+rc, saldo=exp-rc;
+  document.getElementById('p2Rec').textContent=fmtM(rec);
+  document.getElementById('p2Hig').textContent=fmtM(hig);
+  document.getElementById('p2Pct').textContent=p1(pct(hig,rec));
+  document.getElementById('p2Dif').textContent=p1(100-pct(hig,rec));
+  document.getElementById('p2Sal').textContent=fmt(saldo);
+  document.getElementById('p2RecBadge').textContent=data.length+' meses';
+  document.getElementById('p2HigBadge').textContent=fmt(oba)+' Oba + '+fmt(rc)+' CEASA';
+  document.getElementById('p2PctBadge').textContent='Meta não definida';
+  document.getElementById('p2DifBadge').textContent=fmt(rec-hig)+' caixas';
+  document.getElementById('p2SalBadge').textContent=saldo>0?'não voltou do CEASA':'tudo conciliado';
+
+  // alerta de mês sem recebimento (dado incompleto distorce o %)
+  const furos=data.filter(d=>d.retorno===0 && (d.higOba+d.ceasaRec)>0).map(d=>d.label);
+  const w=document.getElementById('p2Warn');
+  if(furos.length){
+    w.style.display='';
+    w.innerHTML='<strong>Atenção:</strong> '+furos.join(', ')+' tem higienização mas recebimento zerado. '+
+      'O % de higienização do período fica inflado. Confira o GODMODE antes de levar esse número pra frente.';
+  } else w.style.display='none';
+
+  colunas('p2Svg', data, [
+    {nome:'Recebimento', cor:'#2F6F8F', val:d=>d.retorno},
+    {nome:'Higienização Oba', cor:'#2D5016', val:d=>d.higOba},
+    {nome:'CEASA expedido', cor:'#F77F00', val:d=>d.ceasaExp},
+    {nome:'CEASA retornado', cor:'#2A9D8F', val:d=>d.ceasaRec},
+  ], 420);
+
+  let h='<thead><tr><th>Mês</th><th>Recebimento</th><th>Higien. Oba</th><th>CEASA exp.</th><th>CEASA ret.</th><th>Total higien.</th><th>% Higien.</th><th>Saldo trânsito</th></tr></thead><tbody>';
+  data.forEach(d=>{
+    const t=d.higOba+d.ceasaRec, pc=pct(t,d.retorno), sl=d.ceasaExp-d.ceasaRec;
+    const cor=d.retorno===0?'var(--muted)':pc<20?'var(--red)':pc<30?'var(--yellow)':'var(--green)';
+    h+=`<tr><td>${d.label}</td><td>${fmt(d.retorno)}</td><td>${fmt(d.higOba)}</td><td>${fmt(d.ceasaExp)}</td><td>${fmt(d.ceasaRec)}</td><td>${fmt(t)}</td>`+
+       `<td style="color:${cor};font-weight:700">${d.retorno?p1(pc):'—'}</td>`+
+       `<td style="color:${sl>0?'var(--yellow)':'var(--muted)'}">${fmt(sl)}</td></tr>`;
+  });
+  h+=`</tbody><tfoot><tr><td>TOTAL</td><td>${fmt(rec)}</td><td>${fmt(oba)}</td><td>${fmt(exp)}</td><td>${fmt(rc)}</td><td>${fmt(hig)}</td><td>${p1(pct(hig,rec))}</td><td>${fmt(saldo)}</td></tr></tfoot>`;
+  document.getElementById('p2Tbl').innerHTML=h;
+}
+
+// ---------- PÁGINA 3 ----------
+function renderPag3(data){
+  const delta=CUSTO_CEASA-CUSTO_OBA;
+  document.getElementById('deltaCusto').textContent=fmtBRL(delta);
+  const oba=data.reduce((s,d)=>s+d.higOba,0);
+  const rc =data.reduce((s,d)=>s+d.ceasaRec,0);
+  const cOba=oba*CUSTO_OBA, cCeasa=rc*CUSTO_CEASA, eco=oba*delta;
+  const hipo=(oba+rc)*CUSTO_CEASA;
+  document.getElementById('p3Eco').textContent=fmtBRL(eco);
+  document.getElementById('p3CustoOba').textContent=fmtBRL(cOba);
+  document.getElementById('p3CustoCeasa').textContent=fmtBRL(cCeasa);
+  document.getElementById('p3CustoTot').textContent=fmtBRL(cOba+cCeasa);
+  document.getElementById('p3Hipo').textContent=fmtBRL(hipo);
+  document.getElementById('p3EcoBadge').textContent=fmt(oba)+' caixas × '+fmtBRL(delta);
+  document.getElementById('p3ObaBadge').textContent=fmt(oba)+' caixas';
+  document.getElementById('p3CeasaBadge').textContent=fmt(rc)+' caixas';
+  document.getElementById('p3TotBadge').textContent=fmt(oba+rc)+' caixas higienizadas';
+
+  colunas('p3Svg', data, [
+    {nome:'Economia', cor:'#2D5016', val:d=>d.higOba*delta},
+    {nome:'Custo CEASA', cor:'#F77F00', val:d=>d.ceasaRec*CUSTO_CEASA},
+  ], 320, v=>fmtBRLk(v));
+
+  let h='<thead><tr><th>Mês</th><th>Higien. Oba</th><th>Custo Oba</th><th>CEASA ret.</th><th>Custo CEASA</th><th>Custo total</th><th>Economia</th></tr></thead><tbody>';
+  data.forEach(d=>{
+    const co=d.higOba*CUSTO_OBA, cc=d.ceasaRec*CUSTO_CEASA, ec=d.higOba*delta;
+    h+=`<tr><td>${d.label}</td><td>${fmt(d.higOba)}</td><td>${fmtBRL(co)}</td><td>${fmt(d.ceasaRec)}</td><td>${fmtBRL(cc)}</td><td>${fmtBRL(co+cc)}</td><td style="color:var(--green);font-weight:700">${fmtBRL(ec)}</td></tr>`;
+  });
+  h+=`</tbody><tfoot><tr><td>TOTAL</td><td>${fmt(oba)}</td><td>${fmtBRL(cOba)}</td><td>${fmt(rc)}</td><td>${fmtBRL(cCeasa)}</td><td>${fmtBRL(cOba+cCeasa)}</td><td>${fmtBRL(eco)}</td></tr></tfoot>`;
+  document.getElementById('p3Tbl').innerHTML=h;
+}
+
+// ---------- custos: editar e salvar ----------
+['inCustoOba','inCustoCeasa'].forEach(id=>{
+  const el=document.getElementById(id);
+  if(el) el.addEventListener('input',()=>{
+    CUSTO_OBA=Number(document.getElementById('inCustoOba').value)||0;
+    CUSTO_CEASA=Number(document.getElementById('inCustoCeasa').value)||0;
+    renderDashboard();
+  });
+});
+
+window.recarregar = async function(){
+  const b=document.getElementById('btn-refresh');
+  b.disabled=true; b.textContent='↻ ATUALIZANDO...';
+  await carregarFirebase();
+  buildTODOS(); renderDashboard();
+  b.disabled=false; b.textContent='↻ ATUALIZAR';
+};
+
+window.salvarCustos = async function(){
+  const b=document.getElementById('btnCusto');
+  b.disabled=true; b.textContent='SALVANDO...';
+  try{
+    await set(ref(db,'higienizacao/custos'), {oba:CUSTO_OBA, ceasa:CUSTO_CEASA, updated:new Date().toISOString()});
+    b.textContent='SALVO ✓';
+    setTimeout(()=>{b.textContent='SALVAR CUSTOS'; b.disabled=false;},1600);
+  }catch(e){
+    alert('Erro ao salvar custos: '+e.message);
+    b.textContent='SALVAR CUSTOS'; b.disabled=false;
+  }
+};
+
 </script>
 
 
